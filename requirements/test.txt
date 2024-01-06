@@ -1,2 +1,2 @@
-pytest==6.1.2
-pywin32==301;platform_system=="Windows"
+pytest>=6.1.2
+pywin32; platform_system=="Windows"
