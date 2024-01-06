@@ -1,0 +1,106 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oschmod"
+description = "Windows and Linux compatible chmod"
+version = "0.3.12"
+authors = [{ name = "YakDriver", email = "dirk.avery@GEEmail.com" }]
+license = { text = "Apache Software License 2.0" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.6",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Utilities",
+]
+urls = { Homepage = "https://github.com/yakdriver/oschmod" }
+dynamic = ["readme"]
+dependencies = ['pywin32;platform_system=="Windows"']
+
+[project.scripts]
+oschmod = "oschmod.cli:main"
+ochmod = "oschmod.cli:main"
+
+[tool.poetry]
+# ...
+name = "oschmod"
+version = "0.3.12"
+description = ""
+authors = ["YakDriver"]
+readme = "README.md"
+
+[tool.setuptools]
+packages = ["oschmod"]
+include-package-data = true
+platforms = ["Linux", "Windows", "Darwin"]
+
+[tool.setuptools.dynamic]
+readme = { file = [
+    "README.md",
+    "CHANGELOG.md",
+], content-type = "text/markdown" }
+
+[tool.distutils.bdist_wheel]
+universal = 1
+
+[tool.pytest.ini_options]
+mock_use_standalone_module = true
+norecursedirs = [
+    ".git",
+    ".tox",
+    ".env",
+    "__pycache__",
+    "dist",
+    "build",
+    "htmlcov",
+]
+python_files = ["test_*.py", "*_test.py", "tests.py"]
+addopts = '''
+-rxEfsw
+--strict
+--doctest-modules
+--doctest-glob=\*.md
+--tb=short'''
+
+[tool.flake8]
+exclude = """
+.tox,
+.git,
+__pycache__,
+.eggs,
+*.egg,
+build,
+dist,
+htmlcov,
+*/static/salt/formulas/*"""
+ignore = "FI15,FI16,FI17,FI5,D107,W503,W504"
+
+[tool.ruff]
+exclude = [
+    ".tox",
+    ".git",
+    "__pycache__",
+    ".eggs",
+    "*.egg",
+    "build",
+    "dist",
+    "htmlcov",
+    "*/static/salt/formulas/*",
+]
+ignore = ["D107"]
+select = ["D", "E", "F", "W"]
