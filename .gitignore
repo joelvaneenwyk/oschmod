@@ -1,5 +1,7 @@
 *.env
 tests/*txt
+.ruff_cache/
+test-output.xml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
