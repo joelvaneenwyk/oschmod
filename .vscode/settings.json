@@ -4,6 +4,7 @@
         "oschmod",
         "PYWIN",
         "pywinerror",
-        "pywintypes"
+        "pywintypes",
+        "topdir"
     ]
 }

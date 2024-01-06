@@ -32,20 +32,22 @@ import re
 import stat
 import string
 
-IS_WINDOWS = platform.system() == 'Windows'
+IS_WINDOWS = platform.system() == "Windows"
 HAS_PYWIN32 = False
 try:
     import ntsecuritycon  # noqa: F401
     import win32security  # noqa: F401
     from pywintypes import error as pywinerror
+
     HAS_PYWIN32 = True
 except ImportError:
     pass
 
 HAS_PWD = False
 try:
-    import pwd            # noqa: F401
-    import grp            # noqa: F401
+    import pwd  # noqa: F401
+    import grp  # noqa: F401
+
     HAS_PWD = True
 except ImportError:
     pass
@@ -54,70 +56,108 @@ if IS_WINDOWS and not HAS_PYWIN32:
     raise ImportError("win32security and ntsecuritycon required on Windows")
 
 if HAS_PYWIN32:
-    W_FLDIR = ntsecuritycon.FILE_LIST_DIRECTORY    # =                        1
-    W_FADFL = ntsecuritycon.FILE_ADD_FILE          # =                       10
+    W_FLDIR = ntsecuritycon.FILE_LIST_DIRECTORY  # =                        1
+    W_FADFL = ntsecuritycon.FILE_ADD_FILE  # =                       10
     W_FADSD = ntsecuritycon.FILE_ADD_SUBDIRECTORY  # =                      100
-    W_FRDEA = ntsecuritycon.FILE_READ_EA           # =                     1000
-    W_FWREA = ntsecuritycon.FILE_WRITE_EA          # =                    10000
-    W_FTRAV = ntsecuritycon.FILE_TRAVERSE          # =                   100000
-    W_FDLCH = ntsecuritycon.FILE_DELETE_CHILD      # =                  1000000
-    W_FRDAT = ntsecuritycon.FILE_READ_ATTRIBUTES   # =                 10000000
+    W_FRDEA = ntsecuritycon.FILE_READ_EA  # =                     1000
+    W_FWREA = ntsecuritycon.FILE_WRITE_EA  # =                    10000
+    W_FTRAV = ntsecuritycon.FILE_TRAVERSE  # =                   100000
+    W_FDLCH = ntsecuritycon.FILE_DELETE_CHILD  # =                  1000000
+    W_FRDAT = ntsecuritycon.FILE_READ_ATTRIBUTES  # =                 10000000
     W_FWRAT = ntsecuritycon.FILE_WRITE_ATTRIBUTES  # =                100000000
-    W_DELET = ntsecuritycon.DELETE                 # =        10000000000000000
-    W_RDCON = ntsecuritycon.READ_CONTROL           # =       100000000000000000
-    W_WRDAC = ntsecuritycon.WRITE_DAC              # =      1000000000000000000
-    W_WROWN = ntsecuritycon.WRITE_OWNER            # =     10000000000000000000
-    W_SYNCH = ntsecuritycon.SYNCHRONIZE            # =    100000000000000000000
-    W_FGNEX = ntsecuritycon.FILE_GENERIC_EXECUTE   # =    100100000000010100000
-    W_FGNRD = ntsecuritycon.FILE_GENERIC_READ      # =    100100000000010001001
-    W_FGNWR = ntsecuritycon.FILE_GENERIC_WRITE     # =    100100000000100010110
-    W_GENAL = ntsecuritycon.GENERIC_ALL         # 10000000000000000000000000000
-    W_GENEX = ntsecuritycon.GENERIC_EXECUTE    # 100000000000000000000000000000
-    W_GENWR = ntsecuritycon.GENERIC_WRITE     # 1000000000000000000000000000000
-    W_GENRD = ntsecuritycon.GENERIC_READ    # -10000000000000000000000000000000
+    W_DELET = ntsecuritycon.DELETE  # =        10000000000000000
+    W_RDCON = ntsecuritycon.READ_CONTROL  # =       100000000000000000
+    W_WRDAC = ntsecuritycon.WRITE_DAC  # =      1000000000000000000
+    W_WROWN = ntsecuritycon.WRITE_OWNER  # =     10000000000000000000
+    W_SYNCH = ntsecuritycon.SYNCHRONIZE  # =    100000000000000000000
+    W_FGNEX = ntsecuritycon.FILE_GENERIC_EXECUTE  # =    100100000000010100000
+    W_FGNRD = ntsecuritycon.FILE_GENERIC_READ  # =    100100000000010001001
+    W_FGNWR = ntsecuritycon.FILE_GENERIC_WRITE  # =    100100000000100010110
+    W_GENAL = ntsecuritycon.GENERIC_ALL  # 10000000000000000000000000000
+    W_GENEX = ntsecuritycon.GENERIC_EXECUTE  # 100000000000000000000000000000
+    W_GENWR = ntsecuritycon.GENERIC_WRITE  # 1000000000000000000000000000000
+    W_GENRD = ntsecuritycon.GENERIC_READ  # -10000000000000000000000000000000
 
     W_DIRRD = W_FLDIR | W_FRDEA | W_FRDAT | W_RDCON | W_SYNCH
-    W_DIRWR = W_FADFL | W_FADSD | W_FWREA | W_FDLCH | W_FWRAT | W_DELET | \
-        W_RDCON | W_WRDAC | W_WROWN | W_SYNCH
+    W_DIRWR = (
+        W_FADFL
+        | W_FADSD
+        | W_FWREA
+        | W_FDLCH
+        | W_FWRAT
+        | W_DELET
+        | W_RDCON
+        | W_WRDAC
+        | W_WROWN
+        | W_SYNCH
+    )
     W_DIREX = W_FTRAV | W_RDCON | W_SYNCH
 
     W_FILRD = W_FGNRD
     W_FILWR = W_FDLCH | W_DELET | W_WRDAC | W_WROWN | W_FGNWR
     W_FILEX = W_FGNEX
 
-    WIN_RWX_PERMS = [
-        [W_FILRD, W_FILWR, W_FILEX],
-        [W_DIRRD, W_DIRWR, W_DIREX]
-    ]
+    WIN_RWX_PERMS = [[W_FILRD, W_FILWR, W_FILEX], [W_DIRRD, W_DIRWR, W_DIREX]]
 
     WIN_FILE_PERMISSIONS = (
-        "DELETE", "READ_CONTROL", "WRITE_DAC", "WRITE_OWNER",
-        "SYNCHRONIZE", "FILE_GENERIC_READ", "FILE_GENERIC_WRITE",
-        "FILE_GENERIC_EXECUTE", "FILE_DELETE_CHILD")
+        "DELETE",
+        "READ_CONTROL",
+        "WRITE_DAC",
+        "WRITE_OWNER",
+        "SYNCHRONIZE",
+        "FILE_GENERIC_READ",
+        "FILE_GENERIC_WRITE",
+        "FILE_GENERIC_EXECUTE",
+        "FILE_DELETE_CHILD",
+    )
 
     WIN_DIR_PERMISSIONS = (
-        "DELETE", "READ_CONTROL", "WRITE_DAC", "WRITE_OWNER",
-        "SYNCHRONIZE", "FILE_ADD_SUBDIRECTORY", "FILE_ADD_FILE",
-        "FILE_DELETE_CHILD", "FILE_LIST_DIRECTORY", "FILE_TRAVERSE",
-        "FILE_READ_ATTRIBUTES", "FILE_WRITE_ATTRIBUTES", "FILE_READ_EA",
-        "FILE_WRITE_EA")
+        "DELETE",
+        "READ_CONTROL",
+        "WRITE_DAC",
+        "WRITE_OWNER",
+        "SYNCHRONIZE",
+        "FILE_ADD_SUBDIRECTORY",
+        "FILE_ADD_FILE",
+        "FILE_DELETE_CHILD",
+        "FILE_LIST_DIRECTORY",
+        "FILE_TRAVERSE",
+        "FILE_READ_ATTRIBUTES",
+        "FILE_WRITE_ATTRIBUTES",
+        "FILE_READ_EA",
+        "FILE_WRITE_EA",
+    )
 
     WIN_DIR_INHERIT_PERMISSIONS = (
-        "DELETE", "READ_CONTROL", "WRITE_DAC", "WRITE_OWNER",
-        "SYNCHRONIZE", "GENERIC_READ", "GENERIC_WRITE", "GENERIC_EXECUTE",
-        "GENERIC_ALL")
+        "DELETE",
+        "READ_CONTROL",
+        "WRITE_DAC",
+        "WRITE_OWNER",
+        "SYNCHRONIZE",
+        "GENERIC_READ",
+        "GENERIC_WRITE",
+        "GENERIC_EXECUTE",
+        "GENERIC_ALL",
+    )
 
     WIN_ACE_TYPES = (
-        "ACCESS_ALLOWED_ACE_TYPE", "ACCESS_DENIED_ACE_TYPE",
-        "SYSTEM_AUDIT_ACE_TYPE", "SYSTEM_ALARM_ACE_TYPE")
+        "ACCESS_ALLOWED_ACE_TYPE",
+        "ACCESS_DENIED_ACE_TYPE",
+        "SYSTEM_AUDIT_ACE_TYPE",
+        "SYSTEM_ALARM_ACE_TYPE",
+    )
 
     WIN_INHERITANCE_TYPES = (
-        "OBJECT_INHERIT_ACE", "CONTAINER_INHERIT_ACE",
-        "NO_PROPAGATE_INHERIT_ACE", "INHERIT_ONLY_ACE",
-        "INHERITED_ACE", "SUCCESSFUL_ACCESS_ACE_FLAG",
-        "FAILED_ACCESS_ACE_FLAG")
+        "OBJECT_INHERIT_ACE",
+        "CONTAINER_INHERIT_ACE",
+        "NO_PROPAGATE_INHERIT_ACE",
+        "INHERIT_ONLY_ACE",
+        "INHERITED_ACE",
+        "SUCCESSFUL_ACCESS_ACE_FLAG",
+        "FAILED_ACCESS_ACE_FLAG",
+    )
 
-    SECURITY_NT_AUTHORITY = ('SYSTEM', 'NT AUTHORITY', 5)
+    SECURITY_NT_AUTHORITY = ("SYSTEM", "NT AUTHORITY", 5)
 
 FILE = 0
 DIRECTORY = 1
@@ -139,7 +179,7 @@ OPER_TYPES = [READ, WRITE, EXECUTE]
 STAT_MODES = [
     [stat.S_IRUSR, stat.S_IWUSR, stat.S_IXUSR],
     [stat.S_IRGRP, stat.S_IWGRP, stat.S_IXGRP],
-    [stat.S_IROTH, stat.S_IWOTH, stat.S_IXOTH]
+    [stat.S_IROTH, stat.S_IWOTH, stat.S_IXOTH],
 ]
 
 STAT_KEYS = (
@@ -151,7 +191,7 @@ STAT_KEYS = (
     "S_IXGRP",
     "S_IROTH",
     "S_IWOTH",
-    "S_IXOTH"
+    "S_IXOTH",
 )
 
 __version__ = "0.3.12"
@@ -177,7 +217,7 @@ def set_mode(path, mode):
     if isinstance(mode, int):
         new_mode = mode
     elif isinstance(mode, str):
-        if '+' in mode or '-' in mode or '=' in mode:
+        if "+" in mode or "-" in mode or "=" in mode:
             new_mode = get_effective_mode(get_mode(path), mode)
         else:
             new_mode = int(mode, 8)
@@ -231,14 +271,14 @@ def _get_effective_mode_multiple(current_mode, modes):
 def get_effective_mode(current_mode, symbolic):
     """Get octal mode, given current mode and symbolic mode modifier."""
     if not isinstance(symbolic, str):
-        raise AttributeError('symbolic must be a string')
+        raise AttributeError("symbolic must be a string")
 
     if "," in symbolic:
         return _get_effective_mode_multiple(current_mode, symbolic)
 
-    result = re.search(r'^\s*([ugoa]*)([-+=])([rwx]*)\s*$', symbolic)
+    result = re.search(r"^\s*([ugoa]*)([-+=])([rwx]*)\s*$", symbolic)
     if result is None:
-        raise AttributeError('bad format of symbolic representation modifier')
+        raise AttributeError("bad format of symbolic representation modifier")
 
     whom = result.group(1) or "ugo"
     operation = result.group(2)
@@ -249,14 +289,18 @@ def get_effective_mode(current_mode, symbolic):
 
     # bitwise magic
     bit_perm = _get_basic_symbol_to_mode(perm)
-    mask_mode = ("u" in whom and bit_perm << 6) | \
-        ("g" in whom and bit_perm << 3) | \
-        ("o" in whom and bit_perm << 0)
+    mask_mode = (
+        ("u" in whom and bit_perm << 6)
+        | ("g" in whom and bit_perm << 3)
+        | ("o" in whom and bit_perm << 0)
+    )
 
     if operation == "=":
-        original = ("u" not in whom and current_mode & 448) | \
-            ("g" not in whom and current_mode & 56) | \
-            ("o" not in whom and current_mode & 7)
+        original = (
+            ("u" not in whom and current_mode & 448)
+            | ("g" not in whom and current_mode & 56)
+            | ("o" not in whom and current_mode & 7)
+        )
         return mask_mode | original
 
     if operation == "+":
@@ -291,16 +335,16 @@ def get_group(path):
 def win_get_owner_sid(path):
     """Get the file owner."""
     sec_descriptor = win32security.GetNamedSecurityInfo(
-        path, win32security.SE_FILE_OBJECT,
-        win32security.OWNER_SECURITY_INFORMATION)
+        path, win32security.SE_FILE_OBJECT, win32security.OWNER_SECURITY_INFORMATION
+    )
     return sec_descriptor.GetSecurityDescriptorOwner()
 
 
 def win_get_group_sid(path):
     """Get the file group."""
     sec_descriptor = win32security.GetNamedSecurityInfo(
-        path, win32security.SE_FILE_OBJECT,
-        win32security.GROUP_SECURITY_INFORMATION)
+        path, win32security.SE_FILE_OBJECT, win32security.GROUP_SECURITY_INFORMATION
+    )
     return sec_descriptor.GetSecurityDescriptorGroup()
 
 
@@ -318,8 +362,10 @@ def convert_win_to_stat(win_perm, user_type, object_type):
     mode = 0
 
     for oper in OPER_TYPES:
-        if win_perm & WIN_RWX_PERMS[object_type][oper] == \
-                WIN_RWX_PERMS[object_type][oper]:
+        if (
+            win_perm & WIN_RWX_PERMS[object_type][oper]
+            == WIN_RWX_PERMS[object_type][oper]
+        ):
             mode = mode | STAT_MODES[user_type][oper]
 
     return mode
@@ -349,33 +395,31 @@ def win_get_user_type(sid, sids):
 
 def win_get_object_sids(path):
     """Get the owner, group, other SIDs for an object."""
-    return [
-        win_get_owner_sid(path),
-        win_get_group_sid(path),
-        win_get_other_sid()
-    ]
+    return [win_get_owner_sid(path), win_get_group_sid(path), win_get_other_sid()]
 
 
 def win_get_permissions(path):
     """Get the file or dir permissions."""
     if not os.path.exists(path):
-        raise FileNotFoundError('Path %s could not be found.' % path)
+        raise FileNotFoundError("Path %s could not be found." % path)
 
     return _win_get_permissions(path, get_object_type(path))
 
 
 def _get_basic_symbol_to_mode(symbol):
     """Calculate numeric value of set of 'rwx'."""
-    return ("r" in symbol and 1 << 2) | \
-        ("w" in symbol and 1 << 1) | \
-        ("x" in symbol and 1 << 0)
+    return (
+        ("r" in symbol and 1 << 2)
+        | ("w" in symbol and 1 << 1)
+        | ("x" in symbol and 1 << 0)
+    )
 
 
 def _win_get_permissions(path, object_type):
     """Get the permissions."""
     sec_des = win32security.GetNamedSecurityInfo(
-        path, win32security.SE_FILE_OBJECT,
-        win32security.DACL_SECURITY_INFORMATION)
+        path, win32security.SE_FILE_OBJECT, win32security.DACL_SECURITY_INFORMATION
+    )
     dacl = sec_des.GetSecurityDescriptorDacl()
 
     sids = win_get_object_sids(path)
@@ -383,14 +427,14 @@ def _win_get_permissions(path, object_type):
 
     for index in range(0, dacl.GetAceCount()):
         ace = dacl.GetAce(index)
-        if ace[0][0] == win32security.ACCESS_ALLOWED_ACE_TYPE and \
-                win32security.LookupAccountSid(None, ace[2]) != \
-                SECURITY_NT_AUTHORITY:
+        if (
+            ace[0][0] == win32security.ACCESS_ALLOWED_ACE_TYPE
+            and win32security.LookupAccountSid(None, ace[2]) != SECURITY_NT_AUTHORITY
+        ):
             # Not handling win32security.ACCESS_DENIED_ACE_TYPE
             mode = mode | convert_win_to_stat(
-                ace[1],
-                win_get_user_type(ace[2], sids),
-                object_type)
+                ace[1], win_get_user_type(ace[2], sids), object_type
+            )
 
     return mode
 
@@ -398,7 +442,7 @@ def _win_get_permissions(path, object_type):
 def win_set_permissions(path, mode):
     """Set the file or dir permissions."""
     if not os.path.exists(path):
-        raise FileNotFoundError('Path %s could not be found.' % path)
+        raise FileNotFoundError("Path %s could not be found." % path)
 
     _win_set_permissions(path, mode, get_object_type(path))
 
@@ -412,16 +456,20 @@ def _win_set_permissions(path, mode, object_type):
     # including inherited permissions. However, we'll set permissions with
     # SetFileSecurity and NO_INHERITANCE, to disable inheritance.
     sec_des = win32security.GetNamedSecurityInfo(
-        path, win32security.SE_FILE_OBJECT,
-        win32security.DACL_SECURITY_INFORMATION)
+        path, win32security.SE_FILE_OBJECT, win32security.DACL_SECURITY_INFORMATION
+    )
     dacl = sec_des.GetSecurityDescriptorDacl()
 
     system_ace = None
     for _ in range(0, dacl.GetAceCount()):
         ace = dacl.GetAce(0)
         try:
-            if ace[2] and ace[2].IsValid() and win32security.LookupAccountSid(
-                    None, ace[2]) == SECURITY_NT_AUTHORITY:
+            if (
+                ace[2]
+                and ace[2].IsValid()
+                and win32security.LookupAccountSid(None, ace[2])
+                == SECURITY_NT_AUTHORITY
+            ):
                 system_ace = ace
         except pywinerror:
             print("Found orphaned SID:", ace[2])
@@ -430,7 +478,10 @@ def _win_set_permissions(path, mode, object_type):
     if system_ace:
         dacl.AddAccessAllowedAceEx(
             dacl.GetAclRevision(),
-            win32security.NO_INHERITANCE, system_ace[1], system_ace[2])
+            win32security.NO_INHERITANCE,
+            system_ace[1],
+            system_ace[2],
+        )
 
     sids = win_get_object_sids(path)
 
@@ -439,12 +490,13 @@ def _win_set_permissions(path, mode, object_type):
 
         if win_perm > 0:
             dacl.AddAccessAllowedAceEx(
-                dacl.GetAclRevision(),
-                win32security.NO_INHERITANCE, win_perm, sid)
+                dacl.GetAclRevision(), win32security.NO_INHERITANCE, win_perm, sid
+            )
 
     sec_des.SetSecurityDescriptorDacl(1, dacl, 0)
     win32security.SetFileSecurity(
-        path, win32security.DACL_SECURITY_INFORMATION, sec_des)
+        path, win32security.DACL_SECURITY_INFORMATION, sec_des
+    )
 
 
 def print_win_inheritance(flags):
@@ -484,26 +536,25 @@ def print_win_permissions(win_perm, flags, object_type):
     else:
         permissions = WIN_DIR_PERMISSIONS
         # directories have ACE that is inherited by children within them
-        if flags & ntsecuritycon.OBJECT_INHERIT_ACE == \
-                ntsecuritycon.OBJECT_INHERIT_ACE and flags & \
-                ntsecuritycon.INHERIT_ONLY_ACE == \
-                ntsecuritycon.INHERIT_ONLY_ACE:
+        if (
+            flags & ntsecuritycon.OBJECT_INHERIT_ACE == ntsecuritycon.OBJECT_INHERIT_ACE
+            and flags & ntsecuritycon.INHERIT_ONLY_ACE == ntsecuritycon.INHERIT_ONLY_ACE
+        ):
             permissions = WIN_DIR_INHERIT_PERMISSIONS
 
     calc_mask = 0  # see if we are printing all of the permissions
     for i in permissions:
-        if getattr(ntsecuritycon, i) & win_perm == getattr(
-                ntsecuritycon, i):
+        if getattr(ntsecuritycon, i) & win_perm == getattr(ntsecuritycon, i):
             calc_mask = calc_mask | getattr(ntsecuritycon, i)
             print("    ", i)
     print("  -Mask calculated from printed permissions:", hex(calc_mask))
 
 
 def print_obj_info(path):
-    """Prints object security permission info."""
+    """Print object security permission info."""
     if not os.path.exists(path):
         print(path, "does not exist!")
-        raise FileNotFoundError('Path %s could not be found.' % path)
+        raise FileNotFoundError("Path %s could not be found." % path)
 
     object_type = get_object_type(path)
 
@@ -526,7 +577,8 @@ def _print_win_obj_info(path):
     """Print windows object security info."""
     # get ACEs
     sec_descriptor = win32security.GetFileSecurity(
-        path, win32security.DACL_SECURITY_INFORMATION)
+        path, win32security.DACL_SECURITY_INFORMATION
+    )
     dacl = sec_descriptor.GetSecurityDescriptorDacl()
     if dacl is None:
         print("No Discretionary ACL")
@@ -536,7 +588,7 @@ def _print_win_obj_info(path):
         ace = dacl.GetAce(ace_no)
         print("ACE", ace_no)
 
-        print('  -SID:', win32security.LookupAccountSid(None, ace[2]))
+        print("  -SID:", win32security.LookupAccountSid(None, ace[2]))
 
         print_win_ace_type(ace[0][0])
         print_win_inheritance(ace[0][1])
@@ -545,9 +597,8 @@ def _print_win_obj_info(path):
 
 def perm_test(mode=stat.S_IRUSR | stat.S_IWUSR):
     """Creates test file and modifies permissions."""
-    path = ''.join(
-        random.choice(string.ascii_letters) for i in range(10)) + '.txt'
-    file_hdl = open(path, 'w+')
+    path = "".join(random.choice(string.ascii_letters) for i in range(10)) + ".txt"
+    file_hdl = open(path, "w+")
     file_hdl.write("new file")
     file_hdl.close()
     print("Created test file:", path)

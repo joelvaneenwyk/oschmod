@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "oschmod"
-description = "Windows and Linux compatible chmod"
+description = "Windows and Linux compatible chmod."
 version = "0.3.12"
 authors = [{ name = "YakDriver", email = "dirk.avery@GEEmail.com" }]
 license = { text = "Apache Software License 2.0" }
@@ -16,20 +16,19 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.6",
-    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Utilities",
 ]
 urls = { Homepage = "https://github.com/yakdriver/oschmod" }
-dynamic = ["readme"]
 dependencies = ['pywin32;platform_system=="Windows"']
 
 [project.scripts]
@@ -39,8 +38,8 @@ ochmod = "oschmod.cli:main"
 [tool.poetry]
 # ...
 name = "oschmod"
+description = "Windows and Linux compatible chmod"
 version = "0.3.12"
-description = ""
 authors = ["YakDriver"]
 readme = "README.md"
 
@@ -77,19 +76,6 @@ addopts = '''
 --doctest-glob=\*.md
 --tb=short'''
 
-[tool.flake8]
-exclude = """
-.tox,
-.git,
-__pycache__,
-.eggs,
-*.egg,
-build,
-dist,
-htmlcov,
-*/static/salt/formulas/*"""
-ignore = "FI15,FI16,FI17,FI5,D107,W503,W504"
-
 [tool.ruff]
 exclude = [
     ".tox",
@@ -102,5 +88,16 @@ exclude = [
     "htmlcov",
     "*/static/salt/formulas/*",
 ]
-ignore = ["D107"]
+ignore = [
+    "D107",
+    "D211",
+    "D213",
+    # "FI15",
+    # "FI16",
+    # "FI17",
+    # "FI5",
+    "D107",
+    # "W503",
+    # "W504",
+]
 select = ["D", "E", "F", "W"]
