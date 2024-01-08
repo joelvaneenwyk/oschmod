@@ -17,13 +17,11 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Utilities",
@@ -36,7 +34,6 @@ oschmod = "oschmod.cli:main"
 ochmod = "oschmod.cli:main"
 
 [tool.poetry]
-# ...
 name = "oschmod"
 description = "Windows and Linux compatible chmod"
 version = "0.3.12"
@@ -71,7 +68,7 @@ norecursedirs = [
 python_files = ["test_*.py", "*_test.py", "tests.py"]
 addopts = '''
 -rxEfsw
---strict
+--strict-markers
 --doctest-modules
 --doctest-glob=\*.md
 --tb=short'''
@@ -92,11 +89,11 @@ ignore = [
     "D107",
     "D211",
     "D213",
+    "D203",
     # "FI15",
     # "FI16",
     # "FI17",
     # "FI5",
-    "D107",
     # "W503",
     # "W504",
 ]
