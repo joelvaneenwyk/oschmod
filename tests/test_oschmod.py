@@ -20,9 +20,8 @@ def test_permissions():
         test_dir,
         "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    file_hdl = open(path, "w+", encoding="utf-8")
-    file_hdl.write(path)
-    file_hdl.close()
+    with open(path, "w+", encoding="utf-8") as file_hdl:
+        file_hdl.write(path)
     oschmod.set_mode(path, stat.S_IRUSR | stat.S_IWUSR)
     assert oschmod.get_mode(path) == stat.S_IRUSR | stat.S_IWUSR
 
@@ -80,13 +79,11 @@ def test_set_recursive():
     os.makedirs(testdir, exist_ok=True)
 
     # create files
-    file_handle = open(os.path.join(topdir, "file1"), "w+", encoding="utf-8")
-    file_handle.write("contents")
-    file_handle.close()
+    with open(os.path.join(topdir, "file1"), "w+", encoding="utf-8") as file_handle:
+        file_handle.write("contents")
 
-    file_handle = open(os.path.join(testdir, "file2"), "w+", encoding="utf-8")
-    file_handle.write("contents")
-    file_handle.close()
+    with open(os.path.join(testdir, "file2"), "w+", encoding="utf-8") as file_handle:
+        file_handle.write("contents")
 
     # set permissions to badness
     triple7 = (
