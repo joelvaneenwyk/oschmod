@@ -2,9 +2,13 @@
     "cSpell.words": [
         "aceflags",
         "distutils",
+        "endlocal",
+        "ERRORLEVEL",
         "ntsecuritycon",
         "oschmod",
+        "pipx",
         "pipywin",
+        "pyproject",
         "PYWIN",
         "pywinerror",
         "pywintypes",
@@ -60,5 +64,12 @@
     "python.terminal.activateEnvInCurrentTerminal": true,
     "python.terminal.focusAfterLaunch": true,
     "pythonTestExplorer.outputs.showOutputsOnRun": true,
-    "pythonTestExplorer.testplanEnabled": true
+    "pythonTestExplorer.testplanEnabled": true,
+    "pylint.severity": {
+        "convention": "Warning",
+        "refactor": "Warning"
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    }
 }
