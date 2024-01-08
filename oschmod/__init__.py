@@ -36,6 +36,7 @@ import random
 import re
 import stat
 import string
+import sys
 from enum import IntEnum, auto
 from typing import (
     TYPE_CHECKING,
@@ -50,7 +51,11 @@ from typing import (
 
 __version__ = "0.3.12"
 
-ModePathInput = Union[os.PathLike[str], pathlib.Path, str]
+if sys.version_info >= (3, 9):
+    ModePathInput = Union[os.PathLike[str], pathlib.Path, str]
+else:
+    ModePathInput = Union[pathlib.Path, str]
+
 ModePathInternal = NewType("ModePathInternal", str)
 ModeInputValue = Union[int, str]
 ModeValue = int
