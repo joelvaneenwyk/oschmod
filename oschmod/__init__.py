@@ -72,18 +72,21 @@ PyACE = tuple[tuple[int, int], int, "PySID"]
 PySidValue = tuple[str, str, Any]
 PySidDefault: PySidValue = ("", "", 0)
 
-try:
-    if TYPE_CHECKING:
+if TYPE_CHECKING:
+    try:
         from _win32typing import (  # type: ignore[reportMissingModuleSource]
             PyACL,
             PySECURITY_DESCRIPTOR,
             PySID,
         )
-    else:
-        raise ImportError("win32typing is only available at runtime")
-except ImportError:
-    if TYPE_CHECKING:
-        raise
+    except ImportError as import_error:
+        raise ImportError(
+            "Failed to import win32typing from pywin32 library."
+        ) from import_error
+else:
+    #
+    # If we are not type checking, then still create placeholder classes.
+    #
 
     class PySID:  # type: ignore  # pylint: disable=too-few-public-methods
         """Placeholder class on import error."""
