@@ -1,10 +1,25 @@
 [build-system]
-requires = ["setuptools>=61.2"]
+requires = ["setuptools>=61.2", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["oschmod"]
+include-package-data = true
+platforms = ["Linux", "Windows", "Darwin"]
+
+[tool.setuptools.dynamic]
+readme = { file = ["README.md", "CHANGELOG.md"], content-type = "text/markdown" }
+
+[tool.distutils.bdist_wheel]
+universal = 1
+
+[tool.pip-tools]
+generate-hashes = true
 
 [project]
 name = "oschmod"
 description = "Windows and Linux compatible chmod."
+requires-python = ">=3.8"
 version = "0.3.12"
 authors = [{ name = "YakDriver", email = "dirk.avery@GEEmail.com" }]
 license = { text = "Apache Software License 2.0" }
@@ -24,10 +39,32 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Topic :: Utilities",
+    "Topic :: Utilities"
 ]
 urls = { Homepage = "https://github.com/yakdriver/oschmod" }
-dependencies = ['pywin32;platform_system=="Windows"']
+dependencies = ['pywin32>=306;  platform_system=="Windows"']
+
+[project.optional-dependencies]
+dev = ['tox', 'invoke>=2.2.0', 'poethepoet']
+test = [
+    'mock',
+    'pytest>=6.1.2',
+    'pytest-cov>=2.4.0',
+    'pytest-github-actions-annotate-failures',
+    'pytest-mock',
+    'pytest-xdist'
+]
+types = [
+    'types-chevron>=0.14.2',
+    'types-psutil>=5.9.5.1',
+    'types-pywin32>=304.0.0.1',
+    'types-PyYAML>=6.0.12',
+    'types-setuptools>=65.4.0.0'
+]
+ci = ["pytest-azurepipelines>=0.8.0"]
+lint = ['pre-commit', "mypy", "flake8>=3.9.2", "pylint>=2.7.4", "ruff", 'black>=22.3.0']
+pip = ["pip>=20.3.3"]
+release = ['pyinstaller', "bumpversion>=0.6.0"]
 
 [project.scripts]
 oschmod = "oschmod.cli:main"
@@ -40,31 +77,9 @@ version = "0.3.12"
 authors = ["YakDriver"]
 readme = "README.md"
 
-[tool.setuptools]
-packages = ["oschmod"]
-include-package-data = true
-platforms = ["Linux", "Windows", "Darwin"]
-
-[tool.setuptools.dynamic]
-readme = { file = [
-    "README.md",
-    "CHANGELOG.md",
-], content-type = "text/markdown" }
-
-[tool.distutils.bdist_wheel]
-universal = 1
-
 [tool.pytest.ini_options]
 mock_use_standalone_module = true
-norecursedirs = [
-    ".git",
-    ".tox",
-    ".env",
-    "__pycache__",
-    "dist",
-    "build",
-    "htmlcov",
-]
+norecursedirs = [".git", ".tox", ".env", "__pycache__", "dist", "build", "htmlcov"]
 python_files = ["test_*.py", "*_test.py", "tests.py"]
 addopts = '''
 -rxEfsw
@@ -74,27 +89,17 @@ addopts = '''
 --tb=short'''
 
 [tool.ruff]
-exclude = [
-    ".tox",
-    ".git",
-    "__pycache__",
-    ".eggs",
-    "*.egg",
-    "build",
-    "dist",
-    "htmlcov",
-    "*/static/salt/formulas/*",
-]
+exclude = [".tox", ".git", "__pycache__", ".eggs", "*.egg", "build", "dist", "htmlcov", "*/static/salt/formulas/*"]
 ignore = [
-    "D107",
-    "D211",
-    "D213",
-    "D203",
     # "FI15",
     # "FI16",
     # "FI17",
     # "FI5",
     # "W503",
     # "W504",
+    "D107",
+    "D211",
+    "D213",
+    "D203"
 ]
 select = ["D", "E", "F", "W"]
