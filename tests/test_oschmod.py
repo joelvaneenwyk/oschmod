@@ -8,7 +8,6 @@ import shutil
 import stat
 import string
 import time
-
 from random import randrange
 
 import oschmod
@@ -19,9 +18,9 @@ def test_permissions():
     test_dir = "tests"
     path = os.path.join(
         test_dir,
-        "".join(random.choice(string.ascii_letters) for i in range(10)) + ".txt",
+        "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    file_hdl = open(path, "w+")
+    file_hdl = open(path, "w+", encoding="utf-8")
     file_hdl.write(path)
     file_hdl.close()
     oschmod.set_mode(path, stat.S_IRUSR | stat.S_IWUSR)
@@ -29,11 +28,10 @@ def test_permissions():
 
     path = os.path.join(
         test_dir,
-        "".join(random.choice(string.ascii_letters) for i in range(10)) + ".txt",
+        "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    file_hdl = open(path, "w+")
-    file_hdl.write(path)
-    file_hdl.close()
+    with open(path, "w+", encoding="utf-8") as file_hdl:
+        file_hdl.write(path)
     mode = (
         stat.S_IRUSR
         | stat.S_IWUSR
@@ -48,11 +46,10 @@ def test_permissions():
 
     path = os.path.join(
         test_dir,
-        "".join(random.choice(string.ascii_letters) for i in range(10)) + ".txt",
+        "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    file_hdl = open(path, "w+")
-    file_hdl.write(path)
-    file_hdl.close()
+    with open(path, "w+", encoding="utf-8") as file_hdl:
+        file_hdl.write(path)
     mode = (
         stat.S_IRUSR
         | stat.S_IWUSR
@@ -80,14 +77,14 @@ def test_set_recursive():
     # create dirs
     topdir = "testdir1"
     testdir = os.path.join(topdir, "testdir2", "testdir3")
-    os.makedirs(testdir)
+    os.makedirs(testdir, exist_ok=True)
 
     # create files
-    file_handle = open(os.path.join(topdir, "file1"), "w+")
+    file_handle = open(os.path.join(topdir, "file1"), "w+", encoding="utf-8")
     file_handle.write("contents")
     file_handle.close()
 
-    file_handle = open(os.path.join(testdir, "file2"), "w+")
+    file_handle = open(os.path.join(testdir, "file2"), "w+", encoding="utf-8")
     file_handle.write("contents")
     file_handle.close()
 
@@ -323,16 +320,15 @@ def generate_symbolic():
     return whom + operation + perms
 
 
-def generate_case(prefix, suffix):
+def generate_case(prefix: str, suffix: str) -> str:
     """Generate a test case to be solved manually."""
     symbolic = [generate_symbolic() for _ in range(randrange(1, 4))]
     symbolics = ",".join(symbolic)
-    return '{0:s}0b{1:09b}, "{2:s}"{3:s} == 0b{1:09b}'.format(
-        prefix, randrange(512), symbolics, suffix
-    )
+    value = randrange(512)
+    return f'{prefix:s}0b{value:09b}, "{symbolics:s}"{suffix:s} == 0b{value:09b}'
 
 
-def generate_cases(count):
+def generate_cases(count: int):
     """Generate test cases to be solved manually and added to tests."""
     prefix = "assert oschmod.get_effective_mode("
     suffix = ")"
@@ -340,7 +336,7 @@ def generate_cases(count):
     print("\n".join(cases))
 
 
-def test_symbolic_multiples():
+def test_symbolic_multiples() -> None:
     """Check calculation of effective mode from symbolic."""
     assert oschmod.get_effective_mode(0b000101010, "g-rwx,go=") == 0b000000000
     assert oschmod.get_effective_mode(0b011001011, "uo-wx,u=x") == 0b001001000
@@ -389,16 +385,14 @@ def test_symbolic_use():
     # create dirs
     topdir = "testdir1"
     testdir = os.path.join(topdir, "testdir2", "testdir3")
-    os.makedirs(testdir)
+    os.makedirs(testdir, exist_ok=True)
 
     # create files
-    file_handle = open(os.path.join(topdir, "file1"), "w+")
-    file_handle.write("contents")
-    file_handle.close()
+    with open(os.path.join(topdir, "file1"), "w+", encoding="utf-8") as file_handle:
+        file_handle.write("contents")
 
-    file_handle = open(os.path.join(testdir, "file2"), "w+")
-    file_handle.write("contents")
-    file_handle.close()
+    with open(os.path.join(testdir, "file2"), "w+", encoding="utf-8") as file_handle:
+        file_handle.write("contents")
 
     # set permissions to badness
     triple7 = "+rwx"
