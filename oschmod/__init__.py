@@ -142,6 +142,9 @@ def _get_default_security() -> PySidValue:
     return "", "", 0
 
 
+SystemName = Optional[str]
+SYSTEM_NAME_NONE: SystemName = None
+
 win32security: Any = None
 try:
     import win32security
@@ -181,7 +184,7 @@ except ImportError:
         """Get named security."""
         return _get_default_security_descriptor()
 
-    def LookupAccountSid(systemName: str, sid: PySID) -> PySidValue:  # type: ignore[misc]  # pylint: disable=unused-argument,invalid-name
+    def LookupAccountSid(systemName: SystemName, sid: PySID) -> PySidValue:  # type: ignore[misc]  # pylint: disable=unused-argument,invalid-name
         """Lookup account security."""
         return _get_default_security()
 
@@ -189,6 +192,11 @@ except ImportError:
         filename: str, info: Any, security: PySECURITY_DESCRIPTOR
     ) -> None:
         """Set file-level security."""
+
+
+def _get_account_sid(systemName: SystemName, sid: PySID) -> PySidValue:  # type: ignore[misc]  # pylint: disable=unused-argument,invalid-name
+    """Lookup account security."""
+    return LookupAccountSid(systemName, sid)  # type: ignore[arg-type]
 
 
 ntsecuritycon: Any = None
@@ -648,7 +656,7 @@ def get_object_type(path: ModePathInput) -> ModeObjectType:
 def get_owner(path: ModePathInput) -> ModeSidObject:
     """Get the object owner."""
     if IS_WINDOWS:
-        sid = LookupAccountSid(str(), win_get_owner_sid(path))
+        sid = _get_account_sid(SYSTEM_NAME_NONE, win_get_owner_sid(path))
     else:
         sid = getpwuid(os.stat(_to_path(path)).st_uid).pw_name
     return sid
@@ -657,7 +665,7 @@ def get_owner(path: ModePathInput) -> ModeSidObject:
 def get_group(path: ModePathInput) -> ModeSidObject:
     """Get the object group."""
     if IS_WINDOWS:
-        sid = LookupAccountSid(str(), win_get_group_sid(path))
+        sid = _get_account_sid(SYSTEM_NAME_NONE, win_get_group_sid(path))
     else:
         sid = getgrgid(os.stat(_to_path(path)).st_gid).gr_name
     return sid
@@ -778,7 +786,7 @@ def _win_get_permissions(
         ace = dacl.GetAce(index)
         if (
             ace[0][0] == ACCESS_ALLOWED_ACE_TYPE
-            and LookupAccountSid(str(), ace[2]) != SECURITY_NT_AUTHORITY
+            and _get_account_sid(SYSTEM_NAME_NONE, ace[2]) != SECURITY_NT_AUTHORITY
         ):
             # Not handling ACCESS_DENIED_ACE_TYPE
             mode = mode | convert_win_to_stat(
@@ -811,15 +819,16 @@ def _win_set_permissions(
     system_ace: Optional[PyACE] = None
     for _ in range(0, dacl.GetAceCount()):
         ace = dacl.GetAce(0)
+        _ace, _mode, _sid = ace
         try:
             if (
-                ace[2]
-                and ace[2].IsValid()
-                and LookupAccountSid(str(), ace[2]) == SECURITY_NT_AUTHORITY
+                _sid
+                and _sid.IsValid()
+                and _get_account_sid(SYSTEM_NAME_NONE, _sid) == SECURITY_NT_AUTHORITY
             ):
                 system_ace = ace
         except error:
-            print("Found orphaned SID:", ace[2])
+            print("Found orphaned SID:", _sid)
         dacl.DeleteAce(0)
 
     if system_ace:
@@ -932,7 +941,7 @@ def _print_win_obj_info(path: ModePathInternal):
         ace = dacl.GetAce(ace_no)
         print("ACE", ace_no)
 
-        print("  -SID:", LookupAccountSid(str(), ace[2]))
+        print("  -SID:", _get_account_sid(SYSTEM_NAME_NONE, ace[2]))
 
         print_win_ace_type(ace[0][0])
         print_win_inheritance(ace[0][1])
