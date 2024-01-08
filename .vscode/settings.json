@@ -1,10 +1,64 @@
 {
     "cSpell.words": [
+        "aceflags",
+        "distutils",
         "ntsecuritycon",
         "oschmod",
+        "pipywin",
         "PYWIN",
         "pywinerror",
         "pywintypes",
-        "topdir"
-    ]
+        "redef",
+        "setlocal",
+        "structseq",
+        "topdir",
+        "typeshed"
+    ],
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.wordBasedSuggestions": "allDocuments",
+    "evenBetterToml.formatter.alignComments": true,
+    "evenBetterToml.formatter.allowedBlankLines": 1,
+    "evenBetterToml.formatter.arrayAutoCollapse": true,
+    "evenBetterToml.formatter.arrayTrailingComma": false,
+    "evenBetterToml.formatter.columnWidth": 120,
+    "evenBetterToml.formatter.reorderArrays": false,
+    "evenBetterToml.formatter.trailingNewline": true,
+    "evenBetterToml.schema.links": true,
+    "evenBetterToml.semanticTokens": true,
+    "gitlens.codeLens.symbolScopes": [
+        "!Module"
+    ],
+    "pylint.lintOnChange": true,
+    "pylint.showNotifications": "always",
+    "python.analysis.typeCheckingMode": "strict",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.addImport.exactMatchOnly": true,
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.enableSyncServer": false,
+    "python.analysis.inlayHints.callArgumentNames": "all",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.logLevel": "Warning",
+    "python.analysis.userFileIndexingLimit": 5000,
+    "python.createEnvironment.contentButton": "show",
+    "python.defaultInterpreterPath": "py -3",
+    "python.languageServer": "Pylance",
+    "python.missingPackage.severity": "Error",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.terminal.focusAfterLaunch": true,
+    "pythonTestExplorer.outputs.showOutputsOnRun": true,
+    "pythonTestExplorer.testplanEnabled": true
 }
