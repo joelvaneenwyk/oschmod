@@ -125,21 +125,27 @@ setlocal EnableDelayedExpansion
     goto:$MainUpdate
 
     :$PyEnvSetup
-    call :Command !_pyenv_cmd! install --skip-existing --64only "2.7.18" "3.8.10" "3.12.1"
+    call :Command !_pyenv_cmd! install ^
+        --skip-existing --64only ^
+        "2.7.18" ^
+        "3.8.10" ^
+        "3.12.1"
+    if errorlevel 1 goto:$MainError
     goto:$MainUpdate
 
     :$MainUpdate
-    call :UpdateRequirementFiles
-    if errorlevel 1 goto:$MainError
-
     if exist "%_activate%" call :Command "%_activate%"
-    call :Command py -3 -m pip uninstall -y pipywin32 pywin32
+    call :Command py -3 -m pip uninstall -y -r "!_root!\requirements\restricted.txt"
     call :Command py -3 -m pip install --user -e ".[dev,test,types,ci,lint,release]"
-    if errorlevel 1 goto:$MainError
-
     if exist "%~dp0Scripts\pywin32_postinstall.py" (
         call :Command py -3 "%~dp0Scripts\pywin32_postinstall.py" -install
     )
+    if exist "%_deactivate%" call :Command "%_deactivate%"
+    if errorlevel 1 goto:$MainError
+
+    call :UpdateRequirementFiles
+    if errorlevel 1 goto:$MainError
+
     goto:$MainDone
 
     :$MainError
