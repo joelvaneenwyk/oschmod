@@ -3,7 +3,7 @@ tests/*txt
 .ruff_cache/
 test-output.xml
 testdir*/
-/306
+/[0-9]*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
