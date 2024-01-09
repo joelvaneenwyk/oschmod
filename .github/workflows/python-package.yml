@@ -42,7 +42,13 @@ jobs:
       - name: Run lint checks
         run: |
           python -m pip install .[lint]
-          pylint oschmod/ tests/
+          pylint oschmod/
+          python -m pip install .[test]
+          pylint tests/
+
+      - name: Run ruff checks
+        run: |
+          python -m pip install .[lint]
           ruff check .
 
       - name: Run tests
