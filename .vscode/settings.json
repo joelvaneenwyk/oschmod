@@ -36,6 +36,7 @@
         "pipx",
         "pipywin",
         "pluggy",
+        "pyenv",
         "pyproject",
         "PYWIN",
         "pywinerror",
@@ -46,7 +47,8 @@
         "structseq",
         "topdir",
         "typeshed",
-        "ugoa"
+        "ugoa",
+        "USERPROFILE"
     ],
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.codeActionsOnSave": {
@@ -69,6 +71,14 @@
     "gitlens.codeLens.symbolScopes": [
         "!Module"
     ],
+    "mypy-type-checker.preferDaemon": true,
+    "mypy-type-checker.reportingScope": "workspace",
+    "mypy-type-checker.severity": {
+        "error": "Error",
+        "info": "Warning",
+        "note": "Warning",
+        "warning": "Warning"
+    },
     "pylint.lintOnChange": true,
     "pylint.severity": {
         "convention": "Warning",
