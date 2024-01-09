@@ -36,6 +36,27 @@ endlocal & (
     exit /b %ERRORLEVEL%
 )
 
+:PipCompile
+setlocal EnableExtensions
+    cd /d "%~dp0"
+    call :Command pipx run ^
+        --python "%USERPROFILE%\.pyenv\pyenv-win\shims\python.bat" ^
+        --spec pip-tools ^
+        pip-compile ^
+            --build-isolation ^
+            --no-reuse-hashes ^
+            --verbose ^
+            --strip-extras ^
+            --newline LF ^
+            --no-emit-trusted-host ^
+            --no-allow-unsafe ^
+            --no-emit-options --no-emit-find-links ^
+            --output-file "requirements.txt" ^
+            "pyproject.toml"
+endlocal & (
+    exit /b %ERRORLEVEL%
+)
+
 :UpdateRequirements
     setlocal EnableDelayedExpansion
     set "_args="
@@ -57,9 +78,12 @@ endlocal & (
     goto:$Update
 
     :$Update
-    call :Command pipx run --spec pip-tools pip-compile ^
-        --allow-unsafe --build-isolation --verbose ^
-        --strip-extras --no-header --emit-find-links --newline LF ^
+    set "_python=%USERPROFILE%\.pyenv\pyenv-win\shims\python.bat"
+    if not exist "%_python%" set "_python=python"
+
+    call :Command pipx run --python "!_python!" --spec pip-tools pip-compile ^
+        --no-allow-unsafe --build-isolation --verbose ^
+        --no-header --no-emit-find-links --newline LF ^
         !_args! -o "!_filename!" ^
         "%~dp0pyproject.toml"
 endlocal & exit /b %ERRORLEVEL%
@@ -85,16 +109,15 @@ setlocal EnableExtensions
     goto:$PyEnvSetup
 
     :$PyEnvSetup
-    call pyenv install 2.7.18
-    call pyenv install 3.8.10
-    call pyenv install 3.12.1
+    call pyenv install --skip-existing --64only 2.7.18 3.8.10 3.12.1
     goto:$SkipPyEnv
 
     :$SkipPyEnv
     goto:$MainUpdate
 
     :$MainUpdate
-    call :UpdateRequirements all
+    call :PipCompile
+    :: call :UpdateRequirements all
     if errorlevel 1 goto:$MainError
 
     call :UpdateRequirements ci
