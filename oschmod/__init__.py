@@ -82,9 +82,7 @@ if TYPE_CHECKING:
             PySID,
         )
     except ImportError as import_error:
-        raise ImportError(
-            "Failed to import win32typing from pywin32 library."
-        ) from import_error
+        raise ImportError("Failed to import win32typing from pywin32 library.") from import_error
 else:
     #
     # If we are not type checking, then still create placeholder classes.
@@ -339,7 +337,7 @@ class ModeOperationType(IntEnum):
     EXECUTE = auto()
 
     @staticmethod
-    def values() -> List['ModeOperationType']:
+    def values() -> List["ModeOperationType"]:
         """Return list of values."""
         return [
             ModeOperationType.READ,
@@ -592,9 +590,7 @@ def set_mode_recursive(
     return _set_mode(_path, dir_mode)
 
 
-def _get_effective_mode_multiple(
-    current_mode: ModeValue, modes: ModeInputValue
-) -> ModeValue:
+def _get_effective_mode_multiple(current_mode: ModeValue, modes: ModeInputValue) -> ModeValue:
     """Get octal mode, given current mode and symbolic mode modifiers."""
     new_mode = current_mode
     for mode in str(modes).split(","):
@@ -706,10 +702,7 @@ def convert_win_to_stat(
     mode = 0
 
     for oper in ModeOperationType.values():
-        if (
-            win_perm & WIN_RWX_PERMS[object_type][oper]
-            == WIN_RWX_PERMS[object_type][oper]
-        ):
+        if win_perm & WIN_RWX_PERMS[object_type][oper] == WIN_RWX_PERMS[object_type][oper]:
             mode = mode | STAT_MODES[user_type][oper]
 
     return mode
@@ -772,9 +765,7 @@ def _get_basic_symbol_to_mode(symbol: ModeInputValue) -> ModeValue:
     )
 
 
-def _win_get_permissions(
-    path: ModePathInternal, object_type: ModeObjectType
-) -> ModeValue:
+def _win_get_permissions(path: ModePathInternal, object_type: ModeObjectType) -> ModeValue:
     """Get the permissions."""
     sec_des = GetNamedSecurityInfo(path, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION)
     dacl = sec_des.GetSecurityDescriptorDacl()
@@ -789,9 +780,7 @@ def _win_get_permissions(
             and _get_account_sid(SYSTEM_NAME_NONE, ace[2]) != SECURITY_NT_AUTHORITY
         ):
             # Not handling ACCESS_DENIED_ACE_TYPE
-            mode = mode | convert_win_to_stat(
-                ace[1], win_get_user_type(ace[2], sids), object_type
-            )
+            mode = mode | convert_win_to_stat(ace[1], win_get_user_type(ace[2], sids), object_type)
 
     return mode
 
