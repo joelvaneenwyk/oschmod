@@ -1,27 +1,27 @@
-@echo off
+::@echo off
 goto:$Main
 
 :Command
     goto:$CommandVar
     :CommandVar
         setlocal EnableDelayedExpansion
-        set "_command=!%~1!"
-        set "_command=!_command:      = !"
-        set "_command=!_command:    = !"
-        set "_command=!_command:   = !"
-        set "_command=!_command:  = !"
+        set "_command_value=!%~1!"
+        set "_command_value=!_command_value:      = !"
+        set "_command_value=!_command_value:    = !"
+        set "_command_value=!_command_value:   = !"
+        set "_command_value=!_command_value:  = !"
         set _error_value=0
         if "%CRITICAL_ERROR%"=="" goto:$RunCommand
         if "%CRITICAL_ERROR%"=="0" goto:$RunCommand
 
         :: Hit critical error so skip the command
-        echo [ERROR] Critical error detected. Skipped command: !_command!
+        echo [ERROR] Critical error detected. Skipped command: !_command_value!
         set _error_value=%CRITICAL_ERROR%
         goto:$CommandDone
 
         :$RunCommand
-        echo ##[cmd] !_command!
-        call !_command!
+        echo ##[cmd] !_command_value!
+        call !_command_value!
         set _error_value=%ERRORLEVEL%
 
         :$CommandDone
@@ -30,8 +30,8 @@ goto:$Main
         )
     :$CommandVar
 setlocal EnableDelayedExpansion
-    set "_command=%*"
-    call :CommandVar "_command"
+    set "_command_var=%*"
+    call :CommandVar "_command_var"
 endlocal & (
     exit /b %ERRORLEVEL%
 )
@@ -44,14 +44,15 @@ setlocal EnableExtensions
         --spec pip-tools ^
         pip-compile ^
             --build-isolation ^
-            --no-reuse-hashes ^
             --verbose ^
             --strip-extras ^
             --newline LF ^
-            --no-emit-trusted-host ^
             --no-allow-unsafe ^
-            --no-emit-options --no-emit-find-links ^
-            --output-file "requirements.txt" ^
+            --no-reuse-hashes ^
+            --no-emit-trusted-host ^
+            --no-emit-options ^
+            --no-emit-find-links ^
+            %* ^
             "pyproject.toml"
 endlocal & (
     exit /b %ERRORLEVEL%
@@ -67,77 +68,73 @@ endlocal & (
     if "!_group!"=="" goto:$UpdateRequirementsAll
 
     :: Default
-    set "_filename=%~dp0requirements\!_group!.txt"
+    :$UpdateRequirementsGroup
+    set "_filename=requirements/!_group!.txt"
     set "_args=--extra !_group!"
-    goto:$Update
+    goto:$RunUpdateRequirements
 
     :: All
     :$UpdateRequirementsAll
-    set "_filename=%~dp0requirements.txt"
+    set "_filename=requirements.txt"
     set "_args=--all-extras"
-    goto:$Update
+    goto:$RunUpdateRequirements
 
-    :$Update
+    :$RunUpdateRequirements
     set "_python=%USERPROFILE%\.pyenv\pyenv-win\shims\python.bat"
     if not exist "%_python%" set "_python=python"
 
-    call :Command pipx run --python "!_python!" --spec pip-tools pip-compile ^
-        --no-allow-unsafe --build-isolation --verbose ^
-        --no-header --no-emit-find-links --newline LF ^
-        !_args! -o "!_filename!" ^
-        "%~dp0pyproject.toml"
+    call :PipCompile !_args! -o "!_filename!"
 endlocal & exit /b %ERRORLEVEL%
 
+:UpdateRequirementFiles
+    setlocal EnableDelayedExpansion
+    for %%t in (all ci lint release test) do (
+        call :UpdateRequirements %%t
+        if errorlevel 1 goto:$UpdateRequirementFilesError
+    )
+    goto:$UpdateRequirementFilesDone
+
+    :$UpdateRequirementFilesError
+        echo [ERROR] Failed to update requirements files.
+        goto:$UpdateRequirementFilesDone
+
+    :$UpdateRequirementFilesDone
+endlocal & (
+    exit /b %ERRORLEVEL%
+)
+
 :$Main
-setlocal EnableExtensions
+setlocal EnableDelayedExpansion
     set "_root=%~dp0"
     set "_activate=%_root%\venv\Scripts\activate.bat"
     set "_deactivate=%_root%\venv\Scripts\activate.bat"
     set "_pyenv_bin=%USERPROFILE%\.pyenv\pyenv-win\bin"
-    set "_pyenv_cmd=%_pyenv_bin%\bin\pyenv.bat"
+    set "_pyenv_cmd=pyenv"
 
-    if exist "%_activate%" call :Command "%_activate%"
+    :$PyEnvInit1
+    call !_pyenv_cmd! --version >nul 2>&1
+    if "%ERRORLEVEL%"=="0" goto:$PyEnvSetup
 
-    call pyenv --version >nul 2>&1
-    if errorlevel 1 goto:$PyEnvInit
-    goto:$PyEnvSetup
-
-    :$PyEnvInit
-    set "PATH=%_pyenv%\bin;%PATH%"
-    call pyenv --version >nul 2>&1
-    if errorlevel 1 goto:$SkipPyEnv
-    goto:$PyEnvSetup
+    set "_pyenv_cmd="%_pyenv_bin%\pyenv.bat""
+    call !_pyenv_cmd! --version >nul 2>&1
+    if "%ERRORLEVEL%"=="0" (
+        set "PATH=%_pyenv_bin%;%PATH%"
+        goto:$PyEnvSetup
+    )
+    echo [ERROR] Failed to find and setup 'pyenv' command.
+    goto:$MainUpdate
 
     :$PyEnvSetup
-    call pyenv install --skip-existing --64only 2.7.18 3.8.10 3.12.1
-    goto:$SkipPyEnv
-
-    :$SkipPyEnv
+    call :Command !_pyenv_cmd! install --skip-existing --64only "2.7.18" "3.8.10" "3.12.1"
     goto:$MainUpdate
 
     :$MainUpdate
-    call :PipCompile
-    :: call :UpdateRequirements all
+    call :UpdateRequirementFiles
     if errorlevel 1 goto:$MainError
 
-    call :UpdateRequirements ci
-    if errorlevel 1 goto:$MainError
-
-    call :UpdateRequirements lint
-    if errorlevel 1 goto:$MainError
-
-    call :UpdateRequirements pip
-    if errorlevel 1 goto:$MainError
-
-    call :UpdateRequirements release
-    if errorlevel 1 goto:$MainError
-
-    call :UpdateRequirements test
-    if errorlevel 1 goto:$MainError
-
-    call :Command "%~dp0.venv\Scripts\activate.bat"
+    if exist "%_activate%" call :Command "%_activate%"
     call :Command py -3 -m pip uninstall -y pipywin32 pywin32
-    call :Command py -3 -m pip install --user -e ".[dev,test,types,ci,lint,pip,release]"
+    call :Command py -3 -m pip install --user -e ".[dev,test,types,ci,lint,release]"
     if errorlevel 1 goto:$MainError
 
     if exist "%~dp0Scripts\pywin32_postinstall.py" (
