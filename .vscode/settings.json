@@ -1,4 +1,22 @@
 {
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true,
+            "source.organizeImports": true
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "modificationsIfAvailable",
+        "editor.formatOnType": true,
+        "editor.wordBasedSuggestions": "allDocuments",
+        "gitlens.codeLens.symbolScopes": [
+            "!Module"
+        ]
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
     "cSpell.words": [
         "aceflags",
         "autorelease",
@@ -6,6 +24,7 @@
         "distutils",
         "endlocal",
         "ERRORLEVEL",
+        "inifile",
         "IRUSR",
         "IWUSR",
         "IXUSR",
@@ -16,11 +35,13 @@
         "oschmod",
         "pipx",
         "pipywin",
+        "pluggy",
         "pyproject",
         "PYWIN",
         "pywinerror",
         "pywintypes",
         "redef",
+        "rootdir",
         "setlocal",
         "structseq",
         "topdir",
@@ -40,8 +61,8 @@
     "evenBetterToml.formatter.arrayAutoCollapse": true,
     "evenBetterToml.formatter.arrayTrailingComma": false,
     "evenBetterToml.formatter.columnWidth": 120,
-    "evenBetterToml.formatter.reorderArrays": false,
     "evenbettertoml.formatter.quoteStyle": "auto",
+    "evenBetterToml.formatter.reorderArrays": false,
     "evenBetterToml.formatter.trailingNewline": true,
     "evenBetterToml.schema.links": true,
     "evenBetterToml.semanticTokens": true,
@@ -49,23 +70,22 @@
         "!Module"
     ],
     "pylint.lintOnChange": true,
+    "pylint.severity": {
+        "convention": "Warning",
+        "refactor": "Warning"
+    },
     "pylint.showNotifications": "always",
-    "python.analysis.typeCheckingMode": "strict",
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
-    "python.testing.pytestEnabled": true,
-    "python.testing.unittestEnabled": false,
-    "python.analysis.autoFormatStrings": true,
     "python.analysis.addImport.exactMatchOnly": true,
-    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.autoFormatStrings": true,
     "python.analysis.completeFunctionParens": true,
+    "python.analysis.diagnosticMode": "workspace",
     "python.analysis.enableSyncServer": false,
     "python.analysis.inlayHints.callArgumentNames": "all",
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.pytestParameters": true,
     "python.analysis.inlayHints.variableTypes": true,
     "python.analysis.logLevel": "Warning",
+    "python.analysis.typeCheckingMode": "strict",
     "python.analysis.userFileIndexingLimit": 5000,
     "python.createEnvironment.contentButton": "show",
     "python.defaultInterpreterPath": "py -3",
@@ -73,13 +93,11 @@
     "python.missingPackage.severity": "Error",
     "python.terminal.activateEnvInCurrentTerminal": true,
     "python.terminal.focusAfterLaunch": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
     "pythonTestExplorer.outputs.showOutputsOnRun": true,
-    "pythonTestExplorer.testplanEnabled": true,
-    "pylint.severity": {
-        "convention": "Warning",
-        "refactor": "Warning"
-    },
-    "[toml]": {
-        "editor.defaultFormatter": "tamasfe.even-better-toml"
-    }
+    "pythonTestExplorer.testplanEnabled": true
 }
