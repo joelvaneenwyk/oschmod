@@ -203,8 +203,7 @@ def _get_account_sid(systemName: SystemName, sid: PySID) -> PySidValue:  # type:
 
 ntsecuritycon: Any = None
 try:
-    import ntsecuritycon  # type: ignore[import-untyped,import-not-found,no-redef]
-    from ntsecuritycon import (  # type: ignore[reportMissingModuleSource]
+    from ntsecuritycon import (  # type: ignore
         DELETE,
         FILE_ADD_FILE,
         FILE_ADD_SUBDIRECTORY,
@@ -229,6 +228,7 @@ try:
         WRITE_DAC,
         WRITE_OWNER,
     )
+    import ntsecuritycon  # type: ignore[import-untyped,import-not-found,no-redef]  # isort: skip
 
     HAS_PYWIN32: Final[bool] = True
 except ImportError:
@@ -339,7 +339,7 @@ class ModeOperationType(IntEnum):
     EXECUTE = auto()
 
     @staticmethod
-    def values():
+    def values() -> List['ModeOperationType']:
         """Return list of values."""
         return [
             ModeOperationType.READ,
@@ -796,14 +796,14 @@ def _win_get_permissions(
     return mode
 
 
-def win_set_permissions(path: ModePathInput, mode: ModeValue):
+def win_set_permissions(path: ModePathInput, mode: ModeValue) -> None:
     """Set the file or dir permissions."""
     _win_set_permissions(_to_path(path), mode, get_object_type(path))
 
 
 def _win_set_permissions(
     path: ModePathInternal, mode: ModeValue, object_type: ModeObjectType
-):
+) -> None:
     """Set the permissions."""
     # Overview of Windows inheritance:
     # Get/SetNamedSecurityInfo  = Always includes inheritance
@@ -867,7 +867,7 @@ def print_win_inheritance(flags: int) -> None:
                 print("    ", i)
 
 
-def print_mode_permissions(mode: ModeValue):
+def print_mode_permissions(mode: ModeValue) -> None:
     """Print component permissions in a stat mode."""
     print("Mode:", oct(mode), "(Decimal: " + str(mode) + ")")
     for i in STAT_KEYS:
@@ -875,7 +875,7 @@ def print_mode_permissions(mode: ModeValue):
             print("  stat." + i)
 
 
-def print_win_ace_type(ace_type: int):
+def print_win_ace_type(ace_type: int) -> None:
     """Print ACE type."""
     print("  -Type:")
     for i in WIN_ACE_TYPES:
@@ -883,7 +883,7 @@ def print_win_ace_type(ace_type: int):
             print("    ", i)
 
 
-def print_win_permissions(win_perm: ModeValue, flags: int, object_type: ModeObjectType):
+def print_win_permissions(win_perm: ModeValue, flags: int, object_type: ModeObjectType) -> None:
     """Print permissions from ACE information."""
     print("  -Permissions Mask:", hex(win_perm), "(" + str(win_perm) + ")")
 
@@ -907,7 +907,7 @@ def print_win_permissions(win_perm: ModeValue, flags: int, object_type: ModeObje
     print("  -Mask calculated from printed permissions:", hex(calc_mask))
 
 
-def print_obj_info(path: ModePathInput):
+def print_obj_info(path: ModePathInput) -> None:
     """Print object security permission info."""
     _path = _to_path(path)
 
@@ -948,7 +948,7 @@ def _print_win_obj_info(path: ModePathInternal):
         print_win_permissions(ace[1], ace[0][1], get_object_type(path))
 
 
-def perm_test(mode: ModeValue = stat.S_IRUSR | stat.S_IWUSR):
+def perm_test(mode: ModeValue = stat.S_IRUSR | stat.S_IWUSR) -> None:
     """Create test file and modify permissions."""
     path = "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt"
     with open(path, "w+", encoding="utf-8") as file_hdl:
