@@ -8,6 +8,7 @@ description = "Windows and Linux compatible chmod."
 requires-python = ">=3.8"
 dynamic = ["version"]
 authors = [{ name = "YakDriver", email = "dirk.avery@GEEmail.com" }]
+license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -26,7 +27,7 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Utilities"
 ]
-urls = { Homepage = "https://github.com/yakdriver/oschmod" }
+urls = { Homepage = "https://github.com/joelvaneenwyk/oschmod" }
 dependencies = ['pywin32>=306;  platform_system=="Windows"', 'build>=1.0.3']
 
 [project.optional-dependencies]
@@ -79,12 +80,6 @@ addopts = '''
 line-length = 100
 exclude = [".tox", ".git", "__pycache__", ".eggs", "*.egg", "build", "dist", "htmlcov", "*/static/salt/formulas/*"]
 ignore = [
-    # "FI15",
-    # "FI16",
-    # "FI17",
-    # "FI5",
-    # "W503",
-    # "W504",
     "D107",
     "D211",
     "D213",
