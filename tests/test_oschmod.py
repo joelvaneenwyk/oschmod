@@ -13,24 +13,26 @@ from random import randrange
 import oschmod
 
 
-def test_permissions():
+def test_permissions(test_dir: str) -> None:
     """Tests for stuff."""
-    test_dir = "tests"
-    path = os.path.join(
+    message = "Invalid mode: {test}"
+    test_path_1 = os.path.join(
         test_dir,
         "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    with open(path, "w+", encoding="utf-8") as file_hdl:
-        file_hdl.write(path)
-    oschmod.set_mode(path, stat.S_IRUSR | stat.S_IWUSR)
-    assert oschmod.get_mode(path) == stat.S_IRUSR | stat.S_IWUSR
+    with open(test_path_1, "w+", encoding="utf-8") as file_hdl:
+        file_hdl.write(test_path_1)
+    oschmod.set_mode(test_path_1, stat.S_IRUSR | stat.S_IWUSR)
+    assert oschmod.get_mode(test_path_1) == stat.S_IRUSR | stat.S_IWUSR, message.format(
+        test=test_path_1
+    )
 
-    path = os.path.join(
+    test_path_2 = os.path.join(
         test_dir,
         "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    with open(path, "w+", encoding="utf-8") as file_hdl:
-        file_hdl.write(path)
+    with open(test_path_2, "w+", encoding="utf-8") as file_hdl:
+        file_hdl.write(test_path_2)
     mode_read_write = (
         stat.S_IRUSR
         | stat.S_IWUSR
@@ -40,15 +42,15 @@ def test_permissions():
         | stat.S_IROTH
         | stat.S_IWOTH
     )
-    oschmod.set_mode(path, mode_read_write)
-    assert oschmod.get_mode(path) == mode_read_write
+    oschmod.set_mode(test_path_2, mode_read_write)
+    assert oschmod.get_mode(test_path_2) == mode_read_write, message.format(test=test_path_2)
 
-    path = os.path.join(
+    test_path_3 = os.path.join(
         test_dir,
         "".join(random.choice(string.ascii_letters) for _ in range(10)) + ".txt",
     )
-    with open(path, "w+", encoding="utf-8") as file_hdl:
-        file_hdl.write(path)
+    with open(test_path_3, "w+", encoding="utf-8") as file_hdl:
+        file_hdl.write(test_path_3)
     mode_all = (
         stat.S_IRUSR
         | stat.S_IWUSR
@@ -60,8 +62,8 @@ def test_permissions():
         | stat.S_IWOTH
         | stat.S_IXOTH
     )
-    oschmod.set_mode(path, mode_all)
-    assert oschmod.get_mode(path) == mode_all
+    oschmod.set_mode(test_path_3, mode_all)
+    assert oschmod.get_mode(test_path_3) == mode_all, message.format(test=test_path_3)
 
     file_list = glob.glob(os.path.join(test_dir, "*txt"))
     for file_path in file_list:
@@ -71,10 +73,10 @@ def test_permissions():
             print("Error while deleting file : ", file_path)
 
 
-def test_set_recursive():
+def test_set_recursive(test_dir: str) -> None:
     """Check file permissions are recursively set."""
     # create dirs
-    topdir = "testdir1"
+    topdir = os.path.join(test_dir, "testdir1")
     testdir = os.path.join(topdir, "testdir2", "testdir3")
     os.makedirs(testdir, exist_ok=True)
 
@@ -119,7 +121,7 @@ def test_set_recursive():
     shutil.rmtree(topdir)
 
 
-def test_symbolic_effective_add():
+def test_symbolic_effective_add() -> None:
     """Check calculation of effective mode from symbolic."""
     assert oschmod.get_effective_mode(0b111000000, "g+x") == 0b111001000
     assert oschmod.get_effective_mode(0b111000000, "o+x") == 0b111000001
@@ -161,7 +163,7 @@ def test_symbolic_effective_add():
     assert oschmod.get_effective_mode(0b110001010, "a+rwx") == 0b111111111
 
 
-def test_symbolic_effective_add2():
+def test_symbolic_effective_add2() -> None:
     """Check calculation of effective mode from symbolic."""
     # randomly chosen starting permission = 53
     assert oschmod.get_effective_mode(0b000110101, "g+x") == 0b000111101
@@ -218,7 +220,7 @@ def test_symbolic_effective_add2():
     assert oschmod.get_effective_mode(0b111110101, "u+rwx") == 0b111110101
 
 
-def test_symbolic_effective_sub():
+def test_symbolic_effective_sub() -> None:
     """Check calculation of effective mode from symbolic."""
     # randomly chosen starting permission = 328
     assert oschmod.get_effective_mode(0b101001000, "g-x") == 0b101000000
@@ -257,7 +259,7 @@ def test_symbolic_effective_sub():
     assert oschmod.get_effective_mode(0b010101110, "ug-x") == 0b010100110
 
 
-def test_symbolic_effective_eq():
+def test_symbolic_effective_eq() -> None:
     """Check calculation of effective mode from symbolic."""
     # randomly chosen starting permission = 494
     assert oschmod.get_effective_mode(0b111101110, "go=rx") == 0b111101101
@@ -287,25 +289,25 @@ def test_symbolic_effective_eq():
     assert oschmod.get_effective_mode(0b101100111, "u=r") == 0b100100111
 
 
-def generate_symbolic():
+def generate_symbolic() -> str:
     """Generate one symbolic representation of a mode modifier."""
-    who = randrange(8)
+    who_value = randrange(8)
     whom = (
-        ((who & 0b100 > 0 and "u") or "")
-        + ((who & 0b010 > 0 and "g") or "")
-        + ((who & 0b001 > 0 and "o") or "")
+        ((who_value & 0b100 > 0 and "u") or "")
+        + ((who_value & 0b010 > 0 and "g") or "")
+        + ((who_value & 0b001 > 0 and "o") or "")
     )
-    operation = randrange(3)
+    operation_value = randrange(3)
     operation = (
-        ((operation == 0 and "+") or "")
-        + ((operation == 1 and "-") or "")
-        + ((operation == 2 and "=") or "")
+        ("+" if operation_value == 0 else "")
+        + ("-" if operation_value == 1 else "")
+        + ("=" if operation_value == 2 else "")
     )
-    perm = randrange(8)
+    perm_value = randrange(8)
     perms = (
-        ((perm & 0b100 > 0 and "r") or "")
-        + ((perm & 0b010 > 0 and "w") or "")
-        + ((perm & 0b001 > 0 and "x") or "")
+        ("r" if perm_value & 0b100 > 0 else "")
+        + ("w" if perm_value & 0b010 > 0 else "")
+        + ("x" if perm_value & 0b001 > 0 else "")
     )
     return whom + operation + perms
 
@@ -318,7 +320,7 @@ def generate_case(prefix: str, suffix: str) -> str:
     return f'{prefix:s}0b{value:09b}, "{symbolics:s}"{suffix:s} == 0b{value:09b}'
 
 
-def generate_cases(count: int):
+def generate_cases(count: int) -> None:
     """Generate test cases to be solved manually and added to tests."""
     prefix = "assert oschmod.get_effective_mode("
     suffix = ")"
@@ -370,10 +372,10 @@ def test_symbolic_multiples() -> None:
     assert oschmod.get_effective_mode(0b011101110, "ugo-rx,uo+rw,uo-rw") == 0b000000000
 
 
-def test_symbolic_use():
+def test_symbolic_use(test_dir: str) -> None:
     """Check file permissions are recursively set."""
     # create dirs
-    topdir = "testdir1"
+    topdir = os.path.join(test_dir, "testdir1")
     testdir = os.path.join(topdir, "testdir2", "testdir3")
     os.makedirs(testdir, exist_ok=True)
 
@@ -404,6 +406,3 @@ def test_symbolic_use():
     assert oschmod.get_mode(testdir) == dir_mode
     assert oschmod.get_mode(os.path.join(topdir, "file1")) == file_mode
     assert oschmod.get_mode(os.path.join(testdir, "file2")) == file_mode
-
-    # clean up
-    shutil.rmtree(topdir)
