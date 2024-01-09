@@ -36,32 +36,33 @@ import random
 import re
 import stat
 import string
-import sys
 from enum import IntEnum, auto
 from typing import (
     TYPE_CHECKING,
     Any,
     Final,
     Generic,
+    List,
+    Mapping,
     NewType,
     Optional,
+    Tuple,
     TypeVar,
     Union,
 )
 
 __version__ = "0.3.12"
 
-if sys.version_info >= (3, 9):
-    ModePathInput = Union[os.PathLike[str], pathlib.Path, str]
-else:
-    ModePathInput = Union[pathlib.Path, str]
+IS_WINDOWS: Final[bool] = platform.system() == "Windows"
 
+ModePathInput = Union[pathlib.Path, str]  # pylint: disable=unsubscriptable-object
 ModePathInternal = NewType("ModePathInternal", str)
 ModeInputValue = Union[int, str]
 ModeValue = int
-ModeSidObject = Union[tuple[str, str, Any], str]
-
-IS_WINDOWS = platform.system() == "Windows"
+ModeSidObject = Union[Tuple[str, str, Any], str]
+PyACE = Tuple[Tuple[int, int], int, "PySID"]
+PySidValue = Tuple[str, str, Any]
+PySidDefault: PySidValue = ("", "", 0)
 
 try:
     from pywintypes import error  # type: ignore[import-untyped]
@@ -73,13 +74,9 @@ except ImportError:
         """Placeholder error class."""
 
 
-PyACE = tuple[tuple[int, int], int, "PySID"]
-PySidValue = tuple[str, str, Any]
-PySidDefault: PySidValue = ("", "", 0)
-
 if TYPE_CHECKING:
     try:
-        from _win32typing import (  # type: ignore[reportMissingModuleSource]
+        from _win32typing import (  # type: ignore[reportMissingModuleSource,import-not-found]
             PyACL,
             PySECURITY_DESCRIPTOR,
             PySID,
@@ -152,8 +149,8 @@ SYSTEM_NAME_NONE: SystemName = None
 
 win32security: Any = None
 try:
-    import win32security
-    from win32security import (  # type: ignore[reportMissingModuleSource]  # pylint: disable=ungrouped-imports
+    import win32security  # type: ignore[reportMissingModuleSource,import-not-found,no-redef]
+    from win32security import (  # type: ignore[reportMissingModuleSource,import-not-found]  # pylint: disable=ungrouped-imports
         ACCESS_ALLOWED_ACE_TYPE,
         DACL_SECURITY_INFORMATION,
         GROUP_SECURITY_INFORMATION,
@@ -206,7 +203,7 @@ def _get_account_sid(systemName: SystemName, sid: PySID) -> PySidValue:  # type:
 
 ntsecuritycon: Any = None
 try:
-    import ntsecuritycon  # type: ignore[import-untyped,import-not-found]
+    import ntsecuritycon  # type: ignore[import-untyped,import-not-found,no-redef]
     from ntsecuritycon import (  # type: ignore[reportMissingModuleSource]
         DELETE,
         FILE_ADD_FILE,
@@ -279,7 +276,7 @@ except ImportError:
         class structseq(Generic[_T_co]):  # type: ignore[no-redef]  # pylint: disable=invalid-name,too-few-public-methods
             """Placeholder class on import error."""
 
-    class struct_passwd(structseq[Any], tuple[str, str, int, int, str, str, str]):  # type: ignore[no-redef]  # pylint: disable=too-few-public-methods,invalid-name
+    class struct_passwd(structseq[Any], Tuple[str, str, int, int, str, str, str]):  # type: ignore[no-redef]  # pylint: disable=too-few-public-methods,invalid-name
         """Placeholder class on import error."""
 
         @property
@@ -287,7 +284,7 @@ except ImportError:
             """Placeholder."""
             return ""
 
-    class struct_group(structseq[Any], tuple[str, Optional[str], int, list[str]]):  # type: ignore[no-redef]  # pylint: disable=too-few-public-methods,invalid-name
+    class struct_group(structseq[Any], Tuple[str, Optional[str], int, List[str]]):  # type: ignore[no-redef]  # pylint: disable=too-few-public-methods,invalid-name
         """Placeholder class on import error."""
 
         @property
@@ -306,7 +303,7 @@ except ImportError:
             return 0
 
         @property
-        def gr_mem(self) -> list[str]:
+        def gr_mem(self) -> List[str]:
             """Placeholder."""
             return []
 
@@ -351,7 +348,7 @@ class ModeOperationType(IntEnum):
         ]
 
 
-STAT_MODES: dict[ModeUserType, dict[ModeOperationType, ModeValue]] = {
+STAT_MODES: Mapping[ModeUserType, Mapping[ModeOperationType, ModeValue]] = {
     ModeUserType.OWNER: {
         ModeOperationType.READ: stat.S_IRUSR,
         ModeOperationType.WRITE: stat.S_IWUSR,
@@ -424,7 +421,7 @@ W_FILRD: Final[ModeValue] = W_FGNRD
 W_FILWR: Final[ModeValue] = W_FDLCH | W_DELET | W_WRDAC | W_WROWN | W_FGNWR
 W_FILEX: Final[ModeValue] = W_FGNEX
 
-WIN_RWX_PERMS: Final[dict[ModeObjectType, dict[ModeOperationType, ModeValue]]] = {
+WIN_RWX_PERMS: Final[Mapping[ModeObjectType, Mapping[ModeOperationType, ModeValue]]] = {
     ModeObjectType.FILE: {
         ModeOperationType.READ: W_FILRD,
         ModeOperationType.WRITE: W_FILWR,
@@ -438,7 +435,7 @@ WIN_RWX_PERMS: Final[dict[ModeObjectType, dict[ModeOperationType, ModeValue]]] =
 }
 
 
-class PermissionGroup(tuple[str]):
+class PermissionGroup(Tuple[str]):
     """Permission group."""
 
     def __new__(cls, *args: str) -> "PermissionGroup":
@@ -511,14 +508,14 @@ WIN_INHERITANCE_TYPES: Final[PermissionGroup] = PermissionGroup(
 SECURITY_NT_AUTHORITY: Final[PySidValue] = ("SYSTEM", "NT AUTHORITY", 5)
 
 
-def _get_mode(path: ModePathInternal):
+def _get_mode(path: ModePathInternal) -> ModeValue:
     """Get bitwise mode (stat) of object (dir or file)."""
     if IS_WINDOWS:
         return win_get_permissions(path)
     return os.stat(path).st_mode & (stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
 
-def get_mode(path: ModePathInput):
+def get_mode(path: ModePathInput) -> ModeValue:
     """Get bitwise mode (stat) of object (dir or file)."""
     return _get_mode(_to_path(path))
 
@@ -613,9 +610,7 @@ def get_effective_mode(current_mode: ModeValue, symbolic: ModeInputValue) -> Mod
     if "," in symbolic:
         return _get_effective_mode_multiple(current_mode, symbolic)
 
-    result: Optional[re.Match[str]] = re.search(
-        r"^\s*([ugoa]*)([-+=])([rwx]*)\s*$", symbolic
-    )
+    result = re.search(r"^\s*([ugoa]*)([-+=])([rwx]*)\s*$", symbolic)
     if result is None:
         raise AttributeError("bad format of symbolic representation modifier")
 
@@ -733,7 +728,7 @@ def convert_stat_to_win(
     return win_perm
 
 
-def win_get_user_type(sid: PySID, sids: dict[ModeUserType, PySID]) -> ModeUserType:
+def win_get_user_type(sid: PySID, sids: Mapping[ModeUserType, PySID]) -> ModeUserType:
     """Given object and SIDs, return user type."""
     if sid == sids[ModeUserType.OWNER]:
         return ModeUserType.OWNER
@@ -746,7 +741,7 @@ def win_get_user_type(sid: PySID, sids: dict[ModeUserType, PySID]) -> ModeUserTy
 
 def win_get_object_sids(
     path: ModePathInput,
-) -> dict[ModeUserType, PySID]:
+) -> Mapping[ModeUserType, PySID]:
     """Get the owner, group, other SIDs for an object."""
     return {
         ModeUserType.OWNER: win_get_owner_sid(path),

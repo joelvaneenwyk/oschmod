@@ -31,7 +31,7 @@ def test_permissions():
     )
     with open(path, "w+", encoding="utf-8") as file_hdl:
         file_hdl.write(path)
-    mode = (
+    mode_read_write = (
         stat.S_IRUSR
         | stat.S_IWUSR
         | stat.S_IXUSR
@@ -40,8 +40,8 @@ def test_permissions():
         | stat.S_IROTH
         | stat.S_IWOTH
     )
-    oschmod.set_mode(path, mode)
-    assert oschmod.get_mode(path) == mode
+    oschmod.set_mode(path, mode_read_write)
+    assert oschmod.get_mode(path) == mode_read_write
 
     path = os.path.join(
         test_dir,
@@ -49,7 +49,7 @@ def test_permissions():
     )
     with open(path, "w+", encoding="utf-8") as file_hdl:
         file_hdl.write(path)
-    mode = (
+    mode_all = (
         stat.S_IRUSR
         | stat.S_IWUSR
         | stat.S_IXUSR
@@ -60,8 +60,8 @@ def test_permissions():
         | stat.S_IWOTH
         | stat.S_IXOTH
     )
-    oschmod.set_mode(path, mode)
-    assert oschmod.get_mode(path) == mode
+    oschmod.set_mode(path, mode_all)
+    assert oschmod.get_mode(path) == mode_all
 
     file_list = glob.glob(os.path.join(test_dir, "*txt"))
     for file_path in file_list:
@@ -109,21 +109,14 @@ def test_set_recursive():
     oschmod.set_mode_recursive(topdir, file_mode, dir_mode)
     time.sleep(1)  # modes aren't always ready to go immediately
 
-    mode_dir1 = oschmod.get_mode(topdir)
-    mode_dir2 = oschmod.get_mode(os.path.join(topdir, "testdir2"))
-    mode_dir3 = oschmod.get_mode(testdir)
-    mode_file1 = oschmod.get_mode(os.path.join(topdir, "file1"))
-    mode_file2 = oschmod.get_mode(os.path.join(testdir, "file2"))
+    assert oschmod.get_mode(topdir) == dir_mode
+    assert oschmod.get_mode(os.path.join(topdir, "testdir2")) == dir_mode
+    assert oschmod.get_mode(testdir) == dir_mode
+    assert oschmod.get_mode(os.path.join(topdir, "file1")) == file_mode
+    assert oschmod.get_mode(os.path.join(testdir, "file2")) == file_mode
 
     # clean up
     shutil.rmtree(topdir)
-
-    # check it out
-    assert mode_dir1 == dir_mode
-    assert mode_dir2 == dir_mode
-    assert mode_dir3 == dir_mode
-    assert mode_file1 == file_mode
-    assert mode_file2 == file_mode
 
 
 def test_symbolic_effective_add():
@@ -406,18 +399,11 @@ def test_symbolic_use():
     dir_mode = 0o700
     file_mode = 0o600
 
-    mode_dir1 = oschmod.get_mode(topdir)
-    mode_dir2 = oschmod.get_mode(os.path.join(topdir, "testdir2"))
-    mode_dir3 = oschmod.get_mode(testdir)
-    mode_file1 = oschmod.get_mode(os.path.join(topdir, "file1"))
-    mode_file2 = oschmod.get_mode(os.path.join(testdir, "file2"))
+    assert oschmod.get_mode(topdir) == dir_mode
+    assert oschmod.get_mode(os.path.join(topdir, "testdir2")) == dir_mode
+    assert oschmod.get_mode(testdir) == dir_mode
+    assert oschmod.get_mode(os.path.join(topdir, "file1")) == file_mode
+    assert oschmod.get_mode(os.path.join(testdir, "file2")) == file_mode
 
     # clean up
     shutil.rmtree(topdir)
-
-    # check it out
-    assert mode_dir1 == dir_mode
-    assert mode_dir2 == dir_mode
-    assert mode_dir3 == dir_mode
-    assert mode_file1 == file_mode
-    assert mode_file2 == file_mode
