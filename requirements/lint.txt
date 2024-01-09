@@ -1,3 +1,183 @@
-flake8>=3.9.2
-pylint>=2.7.4
-ruff
+astroid==3.0.2 \
+    --hash=sha256:4a61cf0a59097c7bb52689b0fd63717cd2a8a14dc9f1eee97b82d814881c8c91 \
+    --hash=sha256:d6e62862355f60e716164082d6b4b041d38e2a8cf1c7cd953ded5108bac8ff5c
+    # via pylint
+black==23.12.1 \
+    --hash=sha256:0808494f2b2df923ffc5723ed3c7b096bd76341f6213989759287611e9837d50 \
+    --hash=sha256:1fa88a0f74e50e4487477bc0bb900c6781dbddfdfa32691e780bf854c3b4a47f \
+    --hash=sha256:25e57fd232a6d6ff3f4478a6fd0580838e47c93c83eaf1ccc92d4faf27112c4e \
+    --hash=sha256:2d9e13db441c509a3763a7a3d9a49ccc1b4e974a47be4e08ade2a228876500ec \
+    --hash=sha256:3e1b38b3135fd4c025c28c55ddfc236b05af657828a8a6abe5deec419a0b7055 \
+    --hash=sha256:3fa4be75ef2a6b96ea8d92b1587dd8cb3a35c7e3d51f0738ced0781c3aa3a5a3 \
+    --hash=sha256:4ce3ef14ebe8d9509188014d96af1c456a910d5b5cbf434a09fef7e024b3d0d5 \
+    --hash=sha256:4f0031eaa7b921db76decd73636ef3a12c942ed367d8c3841a0739412b260a54 \
+    --hash=sha256:602cfb1196dc692424c70b6507593a2b29aac0547c1be9a1d1365f0d964c353b \
+    --hash=sha256:6d1bd9c210f8b109b1762ec9fd36592fdd528485aadb3f5849b2740ef17e674e \
+    --hash=sha256:78baad24af0f033958cad29731e27363183e140962595def56423e626f4bee3e \
+    --hash=sha256:8d4df77958a622f9b5a4c96edb4b8c0034f8434032ab11077ec6c56ae9f384ba \
+    --hash=sha256:97e56155c6b737854e60a9ab1c598ff2533d57e7506d97af5481141671abf3ea \
+    --hash=sha256:9c4352800f14be5b4864016882cdba10755bd50805c95f728011bcb47a4afd59 \
+    --hash=sha256:a4d6a9668e45ad99d2f8ec70d5c8c04ef4f32f648ef39048d010b0689832ec6d \
+    --hash=sha256:a920b569dc6b3472513ba6ddea21f440d4b4c699494d2e972a1753cdc25df7b0 \
+    --hash=sha256:ae76c22bde5cbb6bfd211ec343ded2163bba7883c7bc77f6b756a1049436fbb9 \
+    --hash=sha256:b18fb2ae6c4bb63eebe5be6bd869ba2f14fd0259bda7d18a46b764d8fb86298a \
+    --hash=sha256:c04b6d9d20e9c13f43eee8ea87d44156b8505ca8a3c878773f68b4e4812a421e \
+    --hash=sha256:c88b3711d12905b74206227109272673edce0cb29f27e1385f33b0163c414bba \
+    --hash=sha256:dd15245c8b68fe2b6bd0f32c1556509d11bb33aec9b5d0866dd8e2ed3dba09c2 \
+    --hash=sha256:e0aaf6041986767a5e0ce663c7a2f0e9eaf21e6ff87a5f95cbf3675bfd4c41d2
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+build==1.0.3 \
+    --hash=sha256:538aab1b64f9828977f84bc63ae570b060a8ed1be419e7870b8b4fc5e6ea553b \
+    --hash=sha256:589bf99a67df7c9cf07ec0ac0e5e2ea5d4b37ac63301c4986d1acb126aa83f8f
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+click==8.1.7 \
+    --hash=sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28 \
+    --hash=sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de
+    # via black
+colorama==0.4.6 \
+    --hash=sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44 \
+    --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
+    # via
+    #   build
+    #   click
+    #   pylint
+dill==0.3.7 \
+    --hash=sha256:76b122c08ef4ce2eedcd4d1abd8e641114bfc6c2867f49f3c41facf65bf19f5e \
+    --hash=sha256:cc1c8b182eb3013e24bd475ff2e9295af86c1a38eb1aff128dac8962a9ce3c03
+    # via pylint
+flake8==7.0.0 \
+    --hash=sha256:33f96621059e65eec474169085dc92bf26e7b2d47366b70be2f67ab80dc25132 \
+    --hash=sha256:a6dfbb75e03252917f2473ea9653f7cd799c3064e54d4c8140044c5c065f53c3
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+isort==5.13.2 \
+    --hash=sha256:48fdfcb9face5d58a4f6dde2e72a1fb8dcaf8ab26f95ab49fab84c2ddefb0109 \
+    --hash=sha256:8ca5e72a8d85860d5a3fa69b8745237f2939afe12dbf656afbcb47fe72d947a6
+    # via pylint
+mccabe==0.7.0 \
+    --hash=sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325 \
+    --hash=sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e
+    # via
+    #   flake8
+    #   pylint
+mypy==1.8.0 \
+    --hash=sha256:028cf9f2cae89e202d7b6593cd98db6759379f17a319b5faf4f9978d7084cdc6 \
+    --hash=sha256:2afecd6354bbfb6e0160f4e4ad9ba6e4e003b767dd80d85516e71f2e955ab50d \
+    --hash=sha256:2b5b6c721bd4aabaadead3a5e6fa85c11c6c795e0c81a7215776ef8afc66de02 \
+    --hash=sha256:42419861b43e6962a649068a61f4a4839205a3ef525b858377a960b9e2de6e0d \
+    --hash=sha256:42c6680d256ab35637ef88891c6bd02514ccb7e1122133ac96055ff458f93fc3 \
+    --hash=sha256:485a8942f671120f76afffff70f259e1cd0f0cfe08f81c05d8816d958d4577d3 \
+    --hash=sha256:4c886c6cce2d070bd7df4ec4a05a13ee20c0aa60cb587e8d1265b6c03cf91da3 \
+    --hash=sha256:4e6d97288757e1ddba10dd9549ac27982e3e74a49d8d0179fc14d4365c7add66 \
+    --hash=sha256:4ef4be7baf08a203170f29e89d79064463b7fc7a0908b9d0d5114e8009c3a259 \
+    --hash=sha256:51720c776d148bad2372ca21ca29256ed483aa9a4cdefefcef49006dff2a6835 \
+    --hash=sha256:52825b01f5c4c1c4eb0db253ec09c7aa17e1a7304d247c48b6f3599ef40db8bd \
+    --hash=sha256:538fd81bb5e430cc1381a443971c0475582ff9f434c16cd46d2c66763ce85d9d \
+    --hash=sha256:5c1538c38584029352878a0466f03a8ee7547d7bd9f641f57a0f3017a7c905b8 \
+    --hash=sha256:6ff8b244d7085a0b425b56d327b480c3b29cafbd2eff27316a004f9a7391ae07 \
+    --hash=sha256:7178def594014aa6c35a8ff411cf37d682f428b3b5617ca79029d8ae72f5402b \
+    --hash=sha256:720a5ca70e136b675af3af63db533c1c8c9181314d207568bbe79051f122669e \
+    --hash=sha256:7f1478736fcebb90f97e40aff11a5f253af890c845ee0c850fe80aa060a267c6 \
+    --hash=sha256:855fe27b80375e5c5878492f0729540db47b186509c98dae341254c8f45f42ae \
+    --hash=sha256:8963b83d53ee733a6e4196954502b33567ad07dfd74851f32be18eb932fb1cb9 \
+    --hash=sha256:9261ed810972061388918c83c3f5cd46079d875026ba97380f3e3978a72f503d \
+    --hash=sha256:99b00bc72855812a60d253420d8a2eae839b0afa4938f09f4d2aa9bb4654263a \
+    --hash=sha256:ab3c84fa13c04aeeeabb2a7f67a25ef5d77ac9d6486ff33ded762ef353aa5592 \
+    --hash=sha256:afe3fe972c645b4632c563d3f3eff1cdca2fa058f730df2b93a35e3b0c538218 \
+    --hash=sha256:d19c413b3c07cbecf1f991e2221746b0d2a9410b59cb3f4fb9557f0365a1a817 \
+    --hash=sha256:df9824ac11deaf007443e7ed2a4a26bebff98d2bc43c6da21b2b64185da011c4 \
+    --hash=sha256:e46f44b54ebddbeedbd3d5b289a893219065ef805d95094d16a0af6630f5d410 \
+    --hash=sha256:f5ac9a4eeb1ec0f1ccdc6f326bcdb464de5f80eb07fb38b5ddd7b0de6bc61e55
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+mypy-extensions==1.0.0 \
+    --hash=sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d \
+    --hash=sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782
+    # via
+    #   black
+    #   mypy
+packaging==23.2 \
+    --hash=sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5 \
+    --hash=sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7
+    # via
+    #   black
+    #   build
+pathspec==0.12.1 \
+    --hash=sha256:a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08 \
+    --hash=sha256:a482d51503a1ab33b1c67a6c3813a26953dbdc71c31dacaef9a838c4e29f5712
+    # via black
+platformdirs==4.1.0 \
+    --hash=sha256:11c8f37bcca40db96d8144522d925583bdb7a31f7b0e37e3ed4318400a8e2380 \
+    --hash=sha256:906d548203468492d432bcb294d4bc2fff751bf84971fbb2c10918cc206ee420
+    # via
+    #   black
+    #   pylint
+pycodestyle==2.11.1 \
+    --hash=sha256:41ba0e7afc9752dfb53ced5489e89f8186be00e599e712660695b7a75ff2663f \
+    --hash=sha256:44fe31000b2d866f2e41841b18528a505fbd7fef9017b04eff4e2648a0fadc67
+    # via flake8
+pyflakes==3.2.0 \
+    --hash=sha256:1c61603ff154621fb2a9172037d84dca3500def8c8b630657d1701f026f8af3f \
+    --hash=sha256:84b5be138a2dfbb40689ca07e2152deb896a65c3a3e24c251c5c62489568074a
+    # via flake8
+pylint==3.0.3 \
+    --hash=sha256:58c2398b0301e049609a8429789ec6edf3aabe9b6c5fec916acd18639c16de8b \
+    --hash=sha256:7a1585285aefc5165db81083c3e06363a27448f6b467b3b0f30dbd0ac1f73810
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+pyproject-hooks==1.0.0 \
+    --hash=sha256:283c11acd6b928d2f6a7c73fa0d01cb2bdc5f07c57a2eeb6e83d5e56b97976f8 \
+    --hash=sha256:f271b298b97f5955d53fb12b72c1fb1948c22c1a6b70b315c54cedaca0264ef5
+    # via build
+pywin32==306 ; platform_system == "Windows" \
+    --hash=sha256:06d3420a5155ba65f0b72f2699b5bacf3109f36acbe8923765c22938a69dfc8d \
+    --hash=sha256:1c73ea9a0d2283d889001998059f5eaaba3b6238f767c9cf2833b13e6a685f65 \
+    --hash=sha256:37257794c1ad39ee9be652da0462dc2e394c8159dfd913a8a4e8eb6fd346da0e \
+    --hash=sha256:383229d515657f4e3ed1343da8be101000562bf514591ff383ae940cad65458b \
+    --hash=sha256:39b61c15272833b5c329a2989999dcae836b1eed650252ab1b7bfbe1d59f30f4 \
+    --hash=sha256:5821ec52f6d321aa59e2db7e0a35b997de60c201943557d108af9d4ae1ec7040 \
+    --hash=sha256:70dba0c913d19f942a2db25217d9a1b726c278f483a919f1abfed79c9cf64d3a \
+    --hash=sha256:72c5f621542d7bdd4fdb716227be0dd3f8565c11b280be6315b06ace35487d36 \
+    --hash=sha256:84f4471dbca1887ea3803d8848a1616429ac94a4a8d05f4bc9c5dcfd42ca99c8 \
+    --hash=sha256:a7639f51c184c0272e93f244eb24dafca9b1855707d94c192d4a0b4c01e1100e \
+    --hash=sha256:e25fd5b485b55ac9c057f67d94bc203f3f6595078d1fb3b458c9c28b7153a802 \
+    --hash=sha256:e4c092e2589b5cf0d365849e73e02c391c1349958c5ac3e9d5ccb9a28e017b3a \
+    --hash=sha256:e65028133d15b64d2ed8f06dd9fbc268352478d4f9289e69c190ecd6818b6407 \
+    --hash=sha256:e8ac1ae3601bee6ca9f7cb4b5363bf1c0badb935ef243c4733ff9a393b1690c0
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+ruff==0.1.11 \
+    --hash=sha256:09c415716884950080921dd6237767e52e227e397e2008e2bed410117679975b \
+    --hash=sha256:0f58948c6d212a6b8d41cd59e349751018797ce1727f961c2fa755ad6208ba45 \
+    --hash=sha256:190a566c8f766c37074d99640cd9ca3da11d8deae2deae7c9505e68a4a30f740 \
+    --hash=sha256:231d8fb11b2cc7c0366a326a66dafc6ad449d7fcdbc268497ee47e1334f66f77 \
+    --hash=sha256:4b077ce83f47dd6bea1991af08b140e8b8339f0ba8cb9b7a484c30ebab18a23f \
+    --hash=sha256:5b25093dad3b055667730a9b491129c42d45e11cdb7043b702e97125bcec48a1 \
+    --hash=sha256:6464289bd67b2344d2a5d9158d5eb81025258f169e69a46b741b396ffb0cda95 \
+    --hash=sha256:934832f6ed9b34a7d5feea58972635c2039c7a3b434fe5ba2ce015064cb6e955 \
+    --hash=sha256:97ce4d752f964ba559c7023a86e5f8e97f026d511e48013987623915431c7ea9 \
+    --hash=sha256:9b8f397902f92bc2e70fb6bebfa2139008dc72ae5177e66c383fa5426cb0bf2c \
+    --hash=sha256:9bd4025b9c5b429a48280785a2b71d479798a69f5c2919e7d274c5f4b32c3607 \
+    --hash=sha256:a7f772696b4cdc0a3b2e527fc3c7ccc41cdcb98f5c80fdd4f2b8c50eb1458196 \
+    --hash=sha256:c4a88efecec23c37b11076fe676e15c6cdb1271a38f2b415e381e87fe4517f18 \
+    --hash=sha256:e1ad00662305dcb1e987f5ec214d31f7d6a062cae3e74c1cbccef15afd96611d \
+    --hash=sha256:ea0d3e950e394c4b332bcdd112aa566010a9f9c95814844a7468325290aabfd9 \
+    --hash=sha256:eb85ee287b11f901037a6683b2374bb0ec82928c5cbc984f575d0437979c521a \
+    --hash=sha256:f9d4d88cb6eeb4dfe20f9f0519bd2eaba8119bde87c3d5065c541dbae2b5a2cb
+    # via oschmod (C:\Users\JoelVanEenwyk\Projects\oschmod\pyproject.toml)
+tomli==2.0.1 \
+    --hash=sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc \
+    --hash=sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f
+    # via
+    #   black
+    #   build
+    #   mypy
+    #   pylint
+    #   pyproject-hooks
+tomlkit==0.12.3 \
+    --hash=sha256:75baf5012d06501f07bee5bf8e801b9f343e7aac5a92581f20f80ce632e6b5a4 \
+    --hash=sha256:b0a645a9156dc7cb5d3a1f0d4bab66db287fcb8e0430bdd4664a095ea16414ba
+    # via pylint
+typing-extensions==4.9.0 \
+    --hash=sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783 \
+    --hash=sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd
+    # via
+    #   astroid
+    #   black
+    #   mypy
