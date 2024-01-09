@@ -7,7 +7,10 @@ name = "oschmod"
 description = "Windows and Linux compatible chmod."
 requires-python = ">=3.8"
 dynamic = ["version"]
-authors = [{ name = "YakDriver", email = "dirk.avery@GEEmail.com" }]
+authors = [
+    { name = "YakDriver", email = "dirk.avery@GEEmail.com" },
+    { name = "Joel Van Eenwyk", email = "joel.vaneenwyk@gmail.com" }
+]
 license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 5 - Production/Stable",
