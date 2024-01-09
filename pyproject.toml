@@ -61,6 +61,7 @@ platforms = ["Linux", "Windows", "Darwin"]
 
 [tool.setuptools.dynamic]
 readme = { file = ["README.md", "CHANGELOG.md"], content-type = "text/markdown" }
+version = { attr = "oschmod.__version__" }
 
 [tool.distutils.bdist_wheel]
 universal = 1
