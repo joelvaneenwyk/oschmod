@@ -83,13 +83,9 @@ addopts = '''
 [tool.ruff]
 line-length = 100
 exclude = [".tox", ".git", "__pycache__", ".eggs", "*.egg", "build", "dist", "htmlcov", "*/static/salt/formulas/*"]
-ignore = [
-    "D107",
-    "D211",
-    "D213",
-    "D203"
-]
+ignore = ["D107", "D211", "D213", "D203"]
 select = ["D", "E", "F", "W"]
+target-version = "py38"
 
 [tool.pyright]
 ignore = ["build/"]
