@@ -59,6 +59,7 @@ endlocal & (
     :$Update
     call :Command pipx run --spec pip-tools pip-compile ^
         --allow-unsafe --build-isolation --verbose ^
+        --strip-extras --no-header --emit-find-links --newline LF ^
         !_args! -o "!_filename!" ^
         "%~dp0pyproject.toml"
 endlocal & exit /b %ERRORLEVEL%
@@ -66,18 +67,39 @@ endlocal & exit /b %ERRORLEVEL%
 :$Main
 setlocal EnableExtensions
     call :Command "%~dp0.venv\Scripts\deactivate.bat"
+
     call :UpdateRequirements all
+    if errorlevel 1 goto:$MainError
+
     call :UpdateRequirements ci
+    if errorlevel 1 goto:$MainError
+
     call :UpdateRequirements lint
+    if errorlevel 1 goto:$MainError
+
     call :UpdateRequirements pip
+    if errorlevel 1 goto:$MainError
+
     call :UpdateRequirements release
+    if errorlevel 1 goto:$MainError
+
     call :UpdateRequirements test
+    if errorlevel 1 goto:$MainError
 
     call :Command "%~dp0.venv\Scripts\activate.bat"
     call :Command py -3 -m pip uninstall -y pipywin32 pywin32
     call :Command py -3 -m pip install --user -e ".[dev,test,types,ci,lint,pip,release]"
+    if errorlevel 1 goto:$MainError
 
     if exist "%~dp0Scripts\pywin32_postinstall.py" (
         call :Command py -3 "%~dp0Scripts\pywin32_postinstall.py" -install
     )
+    goto:$MainDone
+
+    :$MainError
+    echo [ERROR] Ran into error during setup. Return code: "%ERRORLEVEL%"
+    goto:$MainDone
+
+    :$MainDone
+    echo [INFO] Setup completed for 'oschmod' package.
 endlocal & exit /b %ERRORLEVEL%
