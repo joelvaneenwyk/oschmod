@@ -42,36 +42,28 @@ urls = { Homepage = "https://github.com/yakdriver/oschmod" }
 dependencies = ['pywin32>=306;  platform_system=="Windows"', 'build>=1.0.3']
 
 [project.optional-dependencies]
-dev = ['tox>=4.11.4', 'invoke>=2.2.0', 'poethepoet>=0.24.4', 'pre-commit<3.6.0']
-test = [
-    'mock>=5.1.0',
-    'pytest>=6.1.2',
-    'pytest-cov>=2.4.0',
-    'pytest-github-actions-annotate-failures',
-    'pytest-mock',
-    'pytest-xdist'
+dev = [
+    'tox>=4.11.4',
+    'invoke>=2.2.0',
+    'poethepoet>=0.24.4',
+    'pre-commit<3.6.0; python_version<="3.8"',
+    'pre-commit>=3.6.0; python_version>="3.9"'
 ]
+test = ['mock>=5.1.0', 'pytest>=6.1.2', 'pytest-cov>=2.4.0', 'pytest-mock', 'pytest-xdist']
 types = [
     'types-chevron>=0.14.2',
     'types-psutil>=5.9.5.1',
-    'types-pywin32>=304.0.0.1',
+    'types-pywin32>=306',
     'types-PyYAML>=6.0.12',
     'types-setuptools>=65.4.0.0'
 ]
-ci = ["pytest-azurepipelines>=0.8.0"]
+ci = ["pytest-github-actions-annotate-failures>=0.2.0"]
 lint = ["mypy>=1.0.0", "flake8>=3.9.2", "pylint>=2.7.4", "ruff>=0.1.0", 'black>=22.3.0']
 release = ['pyinstaller', "bumpversion>=0.6.0"]
 
 [project.scripts]
 oschmod = "oschmod.cli:main"
 ochmod = "oschmod.cli:main"
-
-[tool.poetry]
-name = "oschmod"
-description = "Windows and Linux compatible chmod"
-version = "0.3.12"
-authors = ["YakDriver"]
-readme = "README.md"
 
 [tool.pytest.ini_options]
 mock_use_standalone_module = true

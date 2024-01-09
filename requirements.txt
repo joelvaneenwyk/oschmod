@@ -8,8 +8,6 @@ altgraph==0.17.4
     # via pyinstaller
 astroid==3.0.2
     # via pylint
-attrs==23.2.0
-    # via pytest-nunit
 black==23.12.1
     # via oschmod (pyproject.toml)
 build==1.0.3
@@ -58,8 +56,6 @@ importlib-metadata==7.0.1
     #   build
     #   pyinstaller
     #   pyinstaller-hooks-contrib
-importlib-resources==6.1.1
-    # via pytest-azurepipelines
 iniconfig==2.0.0
     # via pytest
 invoke==2.2.0
@@ -126,22 +122,16 @@ pyproject-hooks==1.0.0
 pytest==7.4.4
     # via
     #   oschmod (pyproject.toml)
-    #   pytest-azurepipelines
     #   pytest-cov
     #   pytest-github-actions-annotate-failures
     #   pytest-mock
-    #   pytest-nunit
     #   pytest-xdist
-pytest-azurepipelines==1.0.5
-    # via oschmod (pyproject.toml)
 pytest-cov==4.1.0
     # via oschmod (pyproject.toml)
 pytest-github-actions-annotate-failures==0.2.0
     # via oschmod (pyproject.toml)
 pytest-mock==3.12.0
     # via oschmod (pyproject.toml)
-pytest-nunit==1.0.4
-    # via pytest-azurepipelines
 pytest-xdist==3.5.0
     # via oschmod (pyproject.toml)
 pywin32==306 ; platform_system == "Windows"
@@ -189,9 +179,7 @@ virtualenv==20.25.0
     #   pre-commit
     #   tox
 zipp==3.17.0
-    # via
-    #   importlib-metadata
-    #   importlib-resources
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
