@@ -66,8 +66,34 @@ endlocal & exit /b %ERRORLEVEL%
 
 :$Main
 setlocal EnableExtensions
-    call :Command "%~dp0.venv\Scripts\deactivate.bat"
+    set "_root=%~dp0"
+    set "_activate=%_root%\venv\Scripts\activate.bat"
+    set "_deactivate=%_root%\venv\Scripts\activate.bat"
+    set "_pyenv_bin=%USERPROFILE%\.pyenv\pyenv-win\bin"
+    set "_pyenv_cmd=%_pyenv_bin%\bin\pyenv.bat"
 
+    if exist "%_activate%" call :Command "%_activate%"
+
+    call pyenv --version >nul 2>&1
+    if errorlevel 1 goto:$PyEnvInit
+    goto:$PyEnvSetup
+
+    :$PyEnvInit
+    set "PATH=%_pyenv%\bin;%PATH%"
+    call pyenv --version >nul 2>&1
+    if errorlevel 1 goto:$SkipPyEnv
+    goto:$PyEnvSetup
+
+    :$PyEnvSetup
+    call pyenv install 2.7.18
+    call pyenv install 3.8.10
+    call pyenv install 3.12.1
+    goto:$SkipPyEnv
+
+    :$SkipPyEnv
+    goto:$MainUpdate
+
+    :$MainUpdate
     call :UpdateRequirements all
     if errorlevel 1 goto:$MainError
 
@@ -97,7 +123,7 @@ setlocal EnableExtensions
     goto:$MainDone
 
     :$MainError
-    echo [ERROR] Ran into error during setup. Return code: "%ERRORLEVEL%"
+    echo [ERROR] Failed to setup Python environment for 'oschmod' project. Return code: "%ERRORLEVEL%"
     goto:$MainDone
 
     :$MainDone
