@@ -45,7 +45,7 @@ urls = { Homepage = "https://github.com/yakdriver/oschmod" }
 dependencies = ['pywin32>=306;  platform_system=="Windows"', 'build>=1.0.3']
 
 [project.optional-dependencies]
-dev = ['tox>=4.11.4', 'invoke>=2.2.0', 'poethepoet>=0.24.4', 'pre-commit>=3.6.0']
+dev = ['tox>=4.11.4', 'invoke>=2.2.0', 'poethepoet>=0.24.4', 'pre-commit<3.6.0']
 test = [
     'mock>=5.1.0',
     'pytest>=6.1.2',
@@ -89,6 +89,7 @@ addopts = '''
 --tb=short'''
 
 [tool.ruff]
+line-length = 100
 exclude = [".tox", ".git", "__pycache__", ".eggs", "*.egg", "build", "dist", "htmlcov", "*/static/salt/formulas/*"]
 ignore = [
     # "FI15",
@@ -106,3 +107,6 @@ select = ["D", "E", "F", "W"]
 
 [tool.pyright]
 ignore = ["build/"]
+
+[tool.virtualenv]
+include-system-site-packages = false
