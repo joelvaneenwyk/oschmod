@@ -6,6 +6,10 @@
         "distutils",
         "endlocal",
         "ERRORLEVEL",
+        "IRUSR",
+        "IWUSR",
+        "IXUSR",
+        "Mergify",
         "newver",
         "ntsecuritycon",
         "oneline",
@@ -20,7 +24,8 @@
         "setlocal",
         "structseq",
         "topdir",
-        "typeshed"
+        "typeshed",
+        "ugoa"
     ],
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.codeActionsOnSave": {

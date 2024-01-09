@@ -103,3 +103,8 @@ ignore = [
     "D203"
 ]
 select = ["D", "E", "F", "W"]
+
+[tool.pyright]
+ignore = [
+    "build/"
+]
