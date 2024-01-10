@@ -70,9 +70,21 @@ version = { attr = "oschmod.__version__" }
 universal = 1
 
 [tool.pytest.ini_options]
+filterwarnings = "ignore::pytest.PytestConfigWarning"
 mock_use_standalone_module = true
-norecursedirs = [".git", ".tox", ".env", "__pycache__", "dist", "build", "htmlcov"]
-python_files = ["test_*.py", "*_test.py", "tests.py"]
+norecursedirs = [
+    ".git",
+    ".tox",
+    ".venv",
+    ".ruff_cache",
+    ".mypy-cache",
+    ".env",
+    "__pycache__",
+    "dist",
+    "build",
+    "htmlcov"
+]
+testpaths = ["tests"]
 addopts = '''
 -rxEfsw
 --strict-markers
