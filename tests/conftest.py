@@ -1,12 +1,19 @@
 """Contains the fixtures used by the oschmod tests."""
 
+import os
 import shutil
 from pathlib import Path
 from typing import Generator
 
-import pytest
+import pytest  # pylint: disable=import-error
 
-from oschmod import set_mode_recursive
+try:
+    from oschmod import set_mode_recursive  # pylint: disable=import-error
+except ImportError:
+    import sys
+
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+    from oschmod import set_mode_recursive
 
 
 @pytest.fixture(name="test_dir")

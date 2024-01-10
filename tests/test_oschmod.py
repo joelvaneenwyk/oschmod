@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=redefined-outer-name
 """test_oschmod module."""
+
 import glob
 import os
 import random
@@ -10,7 +11,13 @@ import string
 import time
 from random import randrange
 
-import oschmod
+try:
+    import oschmod  # pylint: disable=import-error
+except ImportError:
+    import sys
+
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+    import oschmod
 
 
 def test_permissions(test_dir: str) -> None:
