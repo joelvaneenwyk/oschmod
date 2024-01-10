@@ -36,10 +36,10 @@ classifiers = [
 ]
 urls = { Homepage = "https://github.com/joelvaneenwyk/oschmod" }
 dependencies = [
-    'pywin32>=306;  sys_platform=="win32"',
-    'pip==20.3.4; sys_version < "3.0"',
-    'build==0.5.1; sys_version < "3.0"',
-    'build>=1.0.3; sys_version > "3.0"'
+    'pywin32>=306; sys_platform=="win32"',
+    'pip==20.3.4; python_version < "3.0"',
+    'build==0.5.1; python_version < "3.0"',
+    'build>=1.0.3; python_version > "3.0"'
 ]
 
 [project.optional-dependencies]
