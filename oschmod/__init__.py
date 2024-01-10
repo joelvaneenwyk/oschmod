@@ -6,6 +6,7 @@ Module for working with file permissions that are consistent across Windows,
 macOS, and Linux.
 
 These bitwise permissions from the stat module can be used with this module:
+
     stat.S_IRWXU   # Mask for file owner permissions
     stat.S_IREAD   # Owner has read permission
     stat.S_IRUSR   # Owner has read permission
@@ -23,7 +24,6 @@ These bitwise permissions from the stat module can be used with this module:
     stat.S_IROTH   # Others have read permission
     stat.S_IWOTH   # Others have write permission
     stat.S_IXOTH   # Others have execute permission
-
 """
 # cspell:ignore DACL dacl Dacl DELET DIREX DIRRD DIRWR FADFL FADSD FDLCH FGNEX
 # cspell:ignore FGNRD FGNWR FILEX FILRD FILWR FLDIR FRDAT FRDEA FTRAV FWRAT FWREA
