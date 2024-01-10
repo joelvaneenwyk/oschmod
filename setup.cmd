@@ -78,10 +78,7 @@ endlocal & (
 
 :UpdateRequirements
     setlocal EnableDelayedExpansion
-    set "_args="
-    set "_filename="
     set "_group=%~1"
-
     if "!_group!"=="all" goto:$UpdateRequirementsAll
     if "!_group!"=="" goto:$UpdateRequirementsAll
 
@@ -104,7 +101,7 @@ endlocal & exit /b %ERRORLEVEL%
 :UpdateRequirementFiles
     setlocal EnableDelayedExpansion
     for %%t in (all ci lint release test types) do (
-        call :UpdateRequirements %%t
+        call :UpdateRequirements "%%t"
         if errorlevel 1 goto:$UpdateRequirementFilesError
         if "%%t"=="" goto:$UpdateRequirementFilesError
     )
