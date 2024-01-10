@@ -18,11 +18,8 @@ jobs:
         python-version: ["3.12", "3.8", "3.9", "3.10", "3.11"]
 
     env:
-      # THIS_REPO: "${TRAVIS_REPO_SLUG#*/}"
       OWNER: joelvaneenwyk
       PYTHONDONTWRITEBYTECODE: 1
-      # RELEASE_VERSION: $(grep -E '^current_version' $TRAVIS_BUILD_DIR/.bumpversion.cfg | sed 's/^.*= //')
-      # PRIOR_VERSION: $(git describe --abbrev=0 --tags)
 
     steps:
       - uses: actions/checkout@v4

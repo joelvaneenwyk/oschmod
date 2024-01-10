@@ -2,8 +2,7 @@ pull_request_rules:
   - name: automatically approve dependabot pull requests
     conditions:
       - author~=dependabot\[bot\]|dependabot-preview\[bot\]
-      - status-success=continuous-integration/travis-ci/pr
-      - status-success=YakDriver.oschmod
+      - status-success=joelvaneenwyk.oschmod
     actions:
       review:
         type: APPROVE
@@ -19,8 +18,7 @@ pull_request_rules:
   - name: automatically approve gha-bot pull requests
     conditions:
       - author~=github-actions\[bot\]
-      - status-success=continuous-integration/travis-ci/pr
-      - status-success=YakDriver.oschmod
+      - status-success=joelvaneenwyk.oschmod
     actions:
       review:
         type: APPROVE
