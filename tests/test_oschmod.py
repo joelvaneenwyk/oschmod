@@ -43,8 +43,8 @@ def test_permissions(test_dir: str) -> None:
         | stat.S_IWOTH
     )
     oschmod.set_mode(test_path_2, test_mode_2)
-    # todo
-    # assert (oschmod.get_mode(test_path_2) & test_mode_2) == test_mode_2, message.format(test=test_path_2)
+    # todo  # pylint: disable=fixme
+    # assert oschmod.get_mode(test_path_2) == test_mode_2, message.format(test=test_path_2)
 
     test_path_3 = os.path.join(
         test_dir,
@@ -64,7 +64,7 @@ def test_permissions(test_dir: str) -> None:
         | stat.S_IXOTH
     )
     oschmod.set_mode(test_path_3, mode_all)
-    # todo
+    # todo  # pylint: disable=fixme
     # assert oschmod.get_mode(test_path_3) == mode_all, message.format(test=test_path_3)
 
     file_list = glob.glob(os.path.join(test_dir, "*txt"))
