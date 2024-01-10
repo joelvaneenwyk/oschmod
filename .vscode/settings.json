@@ -41,6 +41,7 @@
         "pylint",
         "pypi",
         "pyproject",
+        "PYTHONDONTWRITEBYTECODE",
         "PYWIN",
         "pywinerror",
         "pywintypes",
@@ -93,6 +94,8 @@
     "python.analysis.autoFormatStrings": true,
     "python.analysis.completeFunctionParens": true,
     "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.enablePytestExtra": true,
+    "python.analysis.enablePytestSupport": true,
     "python.analysis.enableSyncServer": false,
     "python.analysis.inlayHints.callArgumentNames": "all",
     "python.analysis.inlayHints.functionReturnTypes": true,
@@ -102,16 +105,18 @@
     "python.analysis.typeCheckingMode": "strict",
     "python.analysis.userFileIndexingLimit": 5000,
     "python.createEnvironment.contentButton": "show",
-    "python.defaultInterpreterPath": "py -3",
     "python.languageServer": "Pylance",
     "python.missingPackage.severity": "Error",
     "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.terminal.executeInFileDir": false,
     "python.terminal.focusAfterLaunch": true,
     "python.testing.pytestArgs": [
         "tests"
     ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
+    "pythonTestExplorer.outputs.collectOutputs": true,
     "pythonTestExplorer.outputs.showOutputsOnRun": true,
+    "pythonTestExplorer.testFramework": "pytest",
     "pythonTestExplorer.testplanEnabled": true
 }
