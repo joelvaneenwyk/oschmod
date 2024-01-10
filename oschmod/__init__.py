@@ -51,7 +51,7 @@ from typing import (
     Union,
 )
 
-__version__ = "0.3.12"
+__version__ = "0.3.13"
 
 IS_WINDOWS: Final[bool] = platform.system() == "Windows"
 
