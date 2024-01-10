@@ -2,16 +2,15 @@
 
 import os
 import shutil
+import sys
 from pathlib import Path
 from typing import Generator
 
-import pytest  # pylint: disable=import-error
+import pytest
 
 try:
     from oschmod import set_mode_recursive  # pylint: disable=import-error
 except ImportError:
-    import sys
-
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
     from oschmod import set_mode_recursive
 

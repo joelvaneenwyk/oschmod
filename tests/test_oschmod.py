@@ -8,14 +8,13 @@ import random
 import shutil
 import stat
 import string
+import sys
 import time
 from random import randrange
 
 try:
     import oschmod  # pylint: disable=import-error
 except ImportError:
-    import sys
-
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
     import oschmod
 
@@ -51,7 +50,8 @@ def test_permissions(test_dir: str) -> None:
     )
     oschmod.set_mode(test_path_2, test_mode_2)
     # todo  # pylint: disable=fixme
-    # assert oschmod.get_mode(test_path_2) == test_mode_2, message.format(test=test_path_2)
+    if sys.platform != "win32":
+        assert oschmod.get_mode(test_path_2) == test_mode_2, message.format(test=test_path_2)
 
     test_path_3 = os.path.join(
         test_dir,
@@ -72,7 +72,8 @@ def test_permissions(test_dir: str) -> None:
     )
     oschmod.set_mode(test_path_3, mode_all)
     # todo  # pylint: disable=fixme
-    # assert oschmod.get_mode(test_path_3) == mode_all, message.format(test=test_path_3)
+    if sys.platform != "win32":
+        assert oschmod.get_mode(test_path_3) == mode_all, message.format(test=test_path_3)
 
     file_list = glob.glob(os.path.join(test_dir, "*txt"))
     for file_path in file_list:
