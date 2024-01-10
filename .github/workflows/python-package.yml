@@ -44,7 +44,7 @@ jobs:
           python -m pip install -r requirements/lint.txt
           pylint oschmod/
           python -m pip install -r requirements/test.txt
-          pylint tests/
+          pylint tests/*.py
 
       - name: Run ruff checks
         run: |
