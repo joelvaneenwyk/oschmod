@@ -42,7 +42,7 @@ pytest-mock==3.12.0
     # via oschmod (pyproject.toml)
 pytest-xdist==3.5.0
     # via oschmod (pyproject.toml)
-pywin32==306 ; platform_system == "Windows"
+pywin32==306 ; sys_platform == "win32"
     # via oschmod (pyproject.toml)
 tomli==2.0.1
     # via

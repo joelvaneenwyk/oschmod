@@ -153,7 +153,7 @@ pytest-xdist==3.5.0
     # via oschmod (pyproject.toml)
 python-dotenv==1.0.0
     # via pydantic-settings
-pywin32==306 ; platform_system == "Windows"
+pywin32==306 ; sys_platform == "win32"
     # via oschmod (pyproject.toml)
 pywin32-ctypes==0.2.2
     # via pyinstaller
