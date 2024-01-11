@@ -3,14 +3,11 @@
 # oschmod
 
 [![License](https://img.shields.io/github/license/YakDriver/oschmod.svg)](./LICENSE)
-[![Python versions](https://github.com/joelvaneenwyk/oschmod/actions/workflows/python-package.yml/badge.svg)](https://pypi.python.org/pypi/oschmod)
-[![Python package](ttps://img.shields.io/pypi/pyversions/oschmod.svg)](https://github.com/joelvaneenwyk/oschmod/actions/workflows/python-package.yml)
+[![Python package](https://github.com/joelvaneenwyk/oschmod/actions/workflows/python-package.yml/badge.svg)](https://github.com/joelvaneenwyk/oschmod/actions/workflows/python-package.yml)
 
 ***oschmod*** sets consistent file permissions across Windows, Linux and macOS.
 
-[![Python package](https://github.com/joelvaneenwyk/oschmod/actions/workflows/python-package.yml/badge.svg)](https://github.com/joelvaneenwyk/oschmod/actions/workflows/python-package.yml)
-
-## oschmod TL;DR
+## Overview
 
 ***oschmod*** brings `chmod` functionality to **Windows**, macOS, and Linux! If you're not familiar, `chmod` is a handy macOS and Linux-only tool for setting file permissions.
 
@@ -23,7 +20,7 @@ Prior to ***oschmod***, Windows file permissions couldn't be set in the familiar
 
 ## Installation
 
-```console
+```bash
 pip install oschmod
 ```
 
@@ -41,7 +38,7 @@ A combination of the letters `ugoa` controls which users' access to the file wil
 
 ***oschmod*** brings the ability to set consistent file permissions using the command line to Windows, macOS, and Linux platforms. If you are familiar with `chmod`, ***oschmod*** works similarly, albeit with fewer options.
 
-```console
+```bash
 $ oschmod -h
 usage: oschmod [-h] [-R] mode object
 
@@ -68,30 +65,38 @@ Symbolic representation mode modifiers have three parts:
 2. **operation:** Which operation should be applied? You must include one and only one operation, `[+-=]{1}`, per modifier (although you can have multiple modifiers). `+` adds permissions, `-` removes permissions, and `=` sets permissions regardless of previous permissions. `+` and `-` modifications often depend on the current permissions.
 3. **permission:** Which permission or permissions will be affected? You can include zero or more of `[rwx]*` where `r` is for read, `w` is for write, and `x` is for execute. If you do not include a permission with `+` or `-` (e.g., `u-`), the modifier has no effect. However, if you use no permissions with `=` (e.g., `o=`), all permissions are removed.
 
-**Example 1:** To give everyone execute permissions on a file (all of these are equivalent):
+#### Example 1
 
-```console
+To give everyone execute permissions on a file (all of these are equivalent):
+
+```bash
 oschmod +x <file name>
 oschmod a+x <file name>
 oschmod ugo+x <file name>
 ```
 
-**Example 2:** To remove read, write, and execute permissions from the file group and all others (these are equivalent):
+#### Example 2
 
-```console
+To remove read, write, and execute permissions from the file group and all others (these are equivalent):
+
+```bash
 oschmod go-rwx <file name>
 oschmod go= <file name>
 ```
 
-**Example 3:** To give the file owner read and execute permissions, and remove execute permissions from the group and all others:
+#### Example 3
 
-```console
+To give the file owner read and execute permissions, and remove execute permissions from the group and all others:
+
+```bash
 oschmod u+rx,go-x <file name>
 ```
 
-**Example 4:** To give everyone all permissions, and then remove execute write from the group, and execute from all others:
+#### Example 4
 
-```console
+To give everyone all permissions, and then remove execute write from the group, and execute from all others:
+
+```bash
 oschmod a+rwx,g-w,o-x <file name>
 ```
 
@@ -99,15 +104,19 @@ oschmod a+rwx,g-w,o-x <file name>
 
 For more about what octal representations mean, see [this article](https://medium.com/@dirk.avery/securing-files-on-windows-macos-and-linux-7b2b9899992) on Medium.
 
-**Example 5:** To give everyone read, write, and execute permissions on a file:
+#### Example 5
 
-```console
+To give everyone read, write, and execute permissions on a file:
+
+```bash
 oschmod 777 <file name>
 ```
 
-**Example 6:** To lock down a file to just give the file owner read, write, and execute permissions and deny all permissions to everyone else:
+#### Example 6
 
-```console
+To lock down a file to just give the file owner read, write, and execute permissions and deny all permissions to everyone else:
+
+```bash
 oschmod 700 <file name>
 ```
 
