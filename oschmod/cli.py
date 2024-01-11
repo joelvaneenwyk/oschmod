@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""pyppyn cli."""
+"""Command line interface (CLI) for the 'oschmod' library."""
+
 from __future__ import (
     absolute_import,
     division,
