@@ -19,10 +19,13 @@
     },
     "cSpell.words": [
         "aceflags",
+        "Autobuild",
         "autorelease",
         "bdist",
         "bumpversion",
+        "codeql",
         "distutils",
+        "docstrings",
         "endlocal",
         "ERRORLEVEL",
         "inifile",
