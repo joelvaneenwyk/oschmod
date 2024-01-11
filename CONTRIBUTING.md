@@ -5,7 +5,7 @@ helps, and credit will always be given.
 
 ## Bug Reports
 
-When [reporting a bug][0] please include:
+When [reporting a bug][issues] please include:
 
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in
@@ -17,12 +17,12 @@ When [reporting a bug][0] please include:
 *oschmod* could always use more documentation, whether as part of the official
 *oschmod* docs, in docstrings, or even on the web in blog posts, articles, and
 such. The official documentation is maintained within this project in
-docstrings or in the [docs][3] directory. Contributions are
+docstrings or in the [docs][documentation] directory. Contributions are
 welcome, and are made the same way as any other code.
 
 ## Feature Requests and Feedback
 
-The best way to send feedback is to [file an issue][0] on GitHub.
+The best way to send feedback is to [file an issue][issues] on GitHub.
 
 If you are proposing a feature:
 
@@ -77,5 +77,5 @@ For pull request acceptance, you should:
 3. Add a note to `CHANGELOG.md` about the changes. Include a link to the
     pull request.
 
-[0]: https://github.com/yakdriver/oschmod/issues
-[3]: https://github.com/joelvaneenwyk/oschmod/issues
+[issues]: https://github.com/yakdriver/oschmod/issues
+[documentation]: https://github.com/joelvaneenwyk/oschmod/issues
