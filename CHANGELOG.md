@@ -1,5 +1,15 @@
 # Changelog
 
+## {{UNRELEASED}}
+
+**Commit Delta**: [Change from 0.3.0 release](https://github.com/YakDriver/oschmod/compare/0.3.0...{{UNRELEASED}})
+
+**Released**: {{RELEASE_DATE}}
+
+**Summary**:
+
+- Removed support for Python 2.7 **before** Python 3.8 as they are end-of-life.
+
 ## 0.3.0
 
 **Commit Delta**: [Change from 0.2.4 release](https://github.com/YakDriver/oschmod/compare/0.2.4...0.3.0)
