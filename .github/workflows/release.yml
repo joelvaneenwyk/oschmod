@@ -10,10 +10,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
+
       - name: Check commits since last release
         id: count-commits
         run: |
@@ -34,19 +35,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Bump version
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
+
       - run: |
           pip install -r $GITHUB_WORKSPACE/requirements/release.txt
           newver=$(bumpversion --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)
           echo "::set-env name=NEW_VERSION::$newver"
           echo "New version will be ${{ env.NEW_VERSION }}"
           bumpversion patch
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v2
@@ -56,6 +59,7 @@ jobs:
           commit-message: Release version ${{ env.NEW_VERSION }}
           title: Release version ${{ env.NEW_VERSION }}
           body: This is an automated release that updates dependencies.
+
       - name: Show outputs
         run: |
           echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
