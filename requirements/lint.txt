@@ -6,7 +6,7 @@
 #
 astroid==3.0.2
     # via pylint
-black==23.12.1
+black==24.3.0
     # via oschmod (pyproject.toml)
 build==1.0.3
     # via oschmod (pyproject.toml)
