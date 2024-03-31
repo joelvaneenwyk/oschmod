@@ -46,14 +46,14 @@ jobs:
 
       - run: |
           pip install -r $GITHUB_WORKSPACE/requirements/release.txt
-          newver=$(bumpversion --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)
-          echo "NEW_VERSION=$newver" >> "$GITHUB_ENV"
-          echo "New version will be $newver"
+          new_version="$(bumpversion --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)"
+          echo "NEW_VERSION=$new_version" >> "$GITHUB_ENV"
+          echo "New version will be $new_version"
           bumpversion patch
 
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: autorelease/${{ env.NEW_VERSION }}
