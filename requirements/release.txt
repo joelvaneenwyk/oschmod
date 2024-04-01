@@ -45,7 +45,7 @@ pygments==2.17.2
     # via rich
 pyinstaller==6.3.0
     # via oschmod (pyproject.toml)
-pyinstaller-hooks-contrib==2023.12
+pyinstaller-hooks-contrib==2024.3
     # via pyinstaller
 pyparsing==3.1.1
     # via dotted-notation
