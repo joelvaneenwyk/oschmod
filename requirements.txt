@@ -106,7 +106,7 @@ pluggy==1.3.0
     # via
     #   pytest
     #   tox
-poethepoet==0.24.4
+poethepoet==0.25.0
     # via oschmod (pyproject.toml)
 pre-commit==3.6.0 ; python_version >= "3.9"
     # via oschmod (pyproject.toml)
