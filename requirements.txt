@@ -14,7 +14,7 @@ black==24.3.0
     # via oschmod (pyproject.toml)
 build==1.0.3
     # via oschmod (pyproject.toml)
-bump-my-version==0.16.1
+bump-my-version==0.20.0
     # via oschmod (pyproject.toml)
 cachetools==5.3.2
     # via tox

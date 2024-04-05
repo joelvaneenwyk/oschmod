@@ -10,7 +10,7 @@ annotated-types==0.6.0
     # via pydantic
 build==1.0.3
     # via oschmod (pyproject.toml)
-bump-my-version==0.16.1
+bump-my-version==0.20.0
     # via oschmod (pyproject.toml)
 click==8.1.7
     # via
