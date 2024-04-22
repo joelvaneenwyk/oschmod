@@ -103,6 +103,7 @@ version = { attr = "oschmod.__version__" }
 universal = 1
 
 [tool.pytest.ini_options]
+cache_dir = ".cache/pytest"
 filterwarnings = "ignore::pytest.PytestConfigWarning"
 mock_use_standalone_module = true
 norecursedirs = [
@@ -126,11 +127,14 @@ addopts = '''
 --tb=short'''
 
 [tool.ruff]
+cache-dir = ".cache/ruff"
 line-length = 100
 exclude = [".tox", ".git", "__pycache__", ".eggs", "*.egg", "build", "dist", "htmlcov", "*/static/salt/formulas/*"]
+target-version = "py38"
+
+[tool.ruff.lint]
 ignore = ["D107", "D211", "D213", "D203"]
 select = ["D", "E", "F", "W"]
-target-version = "py38"
 
 [tool.pyright]
 ignore = ["build/"]
@@ -138,6 +142,10 @@ ignore = ["build/"]
 [tool.virtualenv]
 include-system-site-packages = false
 
+[tool.mypy]
+
+]
+cache_dir = ".cache/mypy"
 [tool.bumpversion]
 current_version = "0.3.12"
 commit = true
