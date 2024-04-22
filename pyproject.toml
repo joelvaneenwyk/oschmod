@@ -143,9 +143,8 @@ ignore = ["build/"]
 include-system-site-packages = false
 
 [tool.mypy]
-
-]
 cache_dir = ".cache/mypy"
+
 [tool.bumpversion]
 current_version = "0.3.12"
 commit = true
