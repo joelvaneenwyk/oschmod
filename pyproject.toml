@@ -31,48 +31,54 @@ classifiers = [
     "Topic :: Utilities"
 ]
 urls = { Homepage = "https://github.com/joelvaneenwyk/oschmod" }
-dependencies = [
-    'pywin32>=306; sys_platform=="win32"',
-    'pip==20.3.4; python_version < "3.0"',
-    'build==0.5.1; python_version < "3.0"',
-    'build>=1.0.3; python_version > "3.0"',
-    "tox>=4.15.0"
-]
+dependencies = ["pywin32>=306; sys_platform == 'win32'"]
 
 [project.optional-dependencies]
-dev = [
-    'tox>=4.11.4',
-    'invoke>=2.2.0',
-    'poethepoet>=0.24.4',
-    'pre-commit==1.21.0; python_version<="3.0"',
-    'pre-commit<3.6.0; python_version<="3.8" and python_version>="3.0"',
-    'pre-commit>=3.6.0; python_version>="3.9"'
-]
-test = ['mock>=5.1.0', 'pytest>=6.1.2', 'pytest-cov>=2.4.0', 'pytest-mock', 'pytest-xdist']
-types = [
-    'types-chevron>=0.14.2',
-    'types-psutil>=5.9.5.1',
-    'types-pywin32>=306',
-    'types-PyYAML>=6.0.12',
-    'types-setuptools>=65.4.0.0'
-]
-ci = ["pytest-github-actions-annotate-failures>=0.2.0"]
-lint = ["mypy>=1.0.0", "flake8>=3.9.2", "pylint>=2.7.4", "ruff>=0.1.0", 'black>=22.3.0']
-release = ['pyinstaller', "bump-my-version>=0.16.1"]
-
+dev = []
 [project.scripts]
 oschmod = "oschmod:main"
 ochmod = "oschmod:main"
 
 [tool.rye]
-dev-dependencies = ["tox>=4.15.0", 'mock>=5.1.0', 'pytest>=6.1.2', 'pytest-cov>=2.4.0', 'pytest-mock', 'pytest-xdist']
+dependencies = ["pywin32>=306; sys_platform == 'win32'"]
+dev-dependencies = [
+    'tox>=4.11.4',
+    'invoke>=2.2.0',
+    'poethepoet>=0.24.4',
+    'pre-commit==1.21.0; python_version<="3.0"',
+    'pre-commit<3.6.0; python_version<="3.8" and python_version>="3.0"',
+    'pre-commit>=3.6.0; python_version>="3.9"',
+    "tox>=4.15.0",
+    "hatch>=1.10.0",
+    "ruff>=0.4.3",
+    # ci
+    "pytest-github-actions-annotate-failures>=0.2.0",
+    # test
+    'mock>=5.1.0',
+    'pytest>=6.1.2',
+    'pytest-cov>=2.4.0',
+    'pytest-mock',
+    'pytest-xdist',
+    # types
+    'types-chevron>=0.14.2',
+    'types-psutil>=5.9.5.1',
+    'types-pywin32>=306',
+    'types-PyYAML>=6.0.12',
+    'types-setuptools>=65.4.0.0',
+    # lint
+    "mypy>=1.0.0",
+    "flake8>=3.9.2",
+    "pylint>=2.7.4",
+    "ruff>=0.1.0",
+    'black>=22.3.0',
+    # release
+    'pyinstaller',
+    "bump-my-version>=0.16.1"
+]
 
 [tool.hatch.metadata]
 managed = true
 allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/oschmod"]
 
 [tool.hatch.version]
 path = "src/oschmod/__init__.py"
@@ -85,13 +91,6 @@ pattern = "__version__ = ['\"](?P<version>\\d+\\.\\d+\\.\\d+)['\"]"
 #
 # [tool.setuptools.package-data]
 # "*" = [
-#    # graft oschmod
-#    # graft tests
-#    # include .bumpversion.cfg
-#    # include CHANGELOG.md
-#    # include LICENSE
-#    # include README.md
-#    # include .travis.yml .mergify.yml
 #    "*.txt",
 #    ".editorconfig",
 #    ".mergify.yml",
@@ -101,8 +100,12 @@ pattern = "__version__ = ['\"](?P<version>\\d+\\.\\d+\\.\\d+)['\"]"
 #    "tox.ini"
 #]
 # "oschmod" = ["py.typed"]
-#
-# [tool.setuptools.exclude-package-data]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/oschmod"]
+
+[tool.hatch.build.targets.sdist]
+exclude = ["/.github", "/.ruff_cache", "/.venv", "/.cache"]
 # "*" = ["*.py[cod]", "__pycache__", "*.so", "*.dylib", ".git"]
 # "oschmod" = [".gitattributes"]
 #
