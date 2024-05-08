@@ -571,6 +571,7 @@ def set_mode_recursive(
 
     dir_mode: (`int`)
         If provided, this mode is given to all directories only.
+
     """
     _path = _to_path(path)
 

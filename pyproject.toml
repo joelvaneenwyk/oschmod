@@ -1,10 +1,6 @@
 [build-system]
-requires = [
-    'setuptools>=65.4.0; python_version > "3.0"',
-    # Pin this version as we know it will not update again.
-    'setuptools==44.1.1; python_version < "3.0"'
-]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "oschmod"
@@ -39,7 +35,8 @@ dependencies = [
     'pywin32>=306; sys_platform=="win32"',
     'pip==20.3.4; python_version < "3.0"',
     'build==0.5.1; python_version < "3.0"',
-    'build>=1.0.3; python_version > "3.0"'
+    'build>=1.0.3; python_version > "3.0"',
+    "tox>=4.15.0"
 ]
 
 [project.optional-dependencies]
@@ -64,43 +61,57 @@ lint = ["mypy>=1.0.0", "flake8>=3.9.2", "pylint>=2.7.4", "ruff>=0.1.0", 'black>=
 release = ['pyinstaller', "bump-my-version>=0.16.1"]
 
 [project.scripts]
-oschmod = "oschmod.cli:main"
-ochmod = "oschmod.cli:main"
+oschmod = "oschmod:main"
+ochmod = "oschmod:main"
 
-[tool.setuptools]
-packages = ["oschmod"]
-include-package-data = true
-platforms = ["Linux", "Windows", "Darwin"]
+[tool.rye]
+dev-dependencies = ["tox>=4.15.0", 'mock>=5.1.0', 'pytest>=6.1.2', 'pytest-cov>=2.4.0', 'pytest-mock', 'pytest-xdist']
 
-[tool.setuptools.package-data]
-"*" = [
-    # graft oschmod
-    # graft tests
-    # include .bumpversion.cfg
-    # include CHANGELOG.md
-    # include LICENSE
-    # include README.md
-    # include .travis.yml .mergify.yml
-    "*.txt",
-    ".editorconfig",
-    ".mergify.yml",
-    ".pre-commit-config.yaml",
-    "setup.cmd",
-    "setup.sh",
-    "tox.ini"
-]
-"oschmod" = ["py.typed"]
+[tool.hatch.metadata]
+managed = true
+allow-direct-references = true
 
-[tool.setuptools.exclude-package-data]
-"*" = ["*.py[cod]", "__pycache__", "*.so", "*.dylib", ".git"]
-"oschmod" = [".gitattributes"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/oschmod"]
 
-[tool.setuptools.dynamic]
-readme = { file = ["README.md", "CHANGELOG.md"], content-type = "text/markdown" }
-version = { attr = "oschmod.__version__" }
+[tool.hatch.version]
+path = "src/oschmod/__init__.py"
+pattern = "__version__ = ['\"](?P<version>\\d+\\.\\d+\\.\\d+)['\"]"
 
-[tool.distutils.bdist_wheel]
-universal = 1
+# [tool.setuptools]
+# packages = ["oschmod"]
+# include-package-data = true
+# platforms = ["Linux", "Windows", "Darwin"]
+#
+# [tool.setuptools.package-data]
+# "*" = [
+#    # graft oschmod
+#    # graft tests
+#    # include .bumpversion.cfg
+#    # include CHANGELOG.md
+#    # include LICENSE
+#    # include README.md
+#    # include .travis.yml .mergify.yml
+#    "*.txt",
+#    ".editorconfig",
+#    ".mergify.yml",
+#    ".pre-commit-config.yaml",
+#    "setup.cmd",
+#    "setup.sh",
+#    "tox.ini"
+#]
+# "oschmod" = ["py.typed"]
+#
+# [tool.setuptools.exclude-package-data]
+# "*" = ["*.py[cod]", "__pycache__", "*.so", "*.dylib", ".git"]
+# "oschmod" = [".gitattributes"]
+#
+# [tool.setuptools.dynamic]
+# readme = { file = ["README.md", "CHANGELOG.md"], content-type = "text/markdown" }
+# version = { attr = "oschmod.__version__" }
+#
+# [tool.distutils.bdist_wheel]
+# universal = 1
 
 [tool.pytest.ini_options]
 cache_dir = ".cache/pytest"
