@@ -1,3 +1,10 @@
+#
+# oschmod | ignore list
+#
+
+.build/
+.cache/
+
 *.env
 tests/*txt
 .ruff_cache/
