@@ -10,9 +10,7 @@
         "editor.formatOnSaveMode": "modificationsIfAvailable",
         "editor.formatOnType": true,
         "editor.wordBasedSuggestions": "allDocuments",
-        "gitlens.codeLens.symbolScopes": [
-            "!Module"
-        ]
+        "gitlens.codeLens.symbolScopes": ["!Module"]
     },
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -76,9 +74,7 @@
     "evenBetterToml.formatter.trailingNewline": true,
     "evenBetterToml.schema.links": true,
     "evenBetterToml.semanticTokens": true,
-    "gitlens.codeLens.symbolScopes": [
-        "!Module"
-    ],
+    "gitlens.codeLens.symbolScopes": ["!Module"],
     "mypy-type-checker.preferDaemon": true,
     "mypy-type-checker.reportingScope": "workspace",
     "mypy-type-checker.severity": {
@@ -113,9 +109,7 @@
     "python.terminal.activateEnvInCurrentTerminal": true,
     "python.terminal.executeInFileDir": false,
     "python.terminal.focusAfterLaunch": true,
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
+    "python.testing.pytestArgs": ["tests"],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
     "pythonTestExplorer.outputs.collectOutputs": true,
