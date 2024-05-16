@@ -19,7 +19,3 @@ repos:
     rev: main
     hooks:
       - id: validate-pyproject
-  #- repo: https://github.com/kieran-ryan/pyprojectsort
-  #  rev: v0.3.0
-  #  hooks:
-  #    - id: pyprojectsort
