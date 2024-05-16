@@ -8,5 +8,3 @@
 #   with-sources: false
 
 -e file:.
-pywin32==306
-    # via oschmod
