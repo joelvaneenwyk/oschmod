@@ -8,27 +8,27 @@ description = "Windows, Linux, and macOS compatible `chmod` library."
 requires-python = ">=3.8"
 dynamic = ["version"]
 authors = [
-    { name = "YakDriver", email = "dirk.avery@GEEmail.com" },
-    { name = "Joel Van Eenwyk", email = "joel.vaneenwyk@gmail.com" }
+  { name = "YakDriver", email = "dirk.avery@GEEmail.com" },
+  { name = "Joel Van Eenwyk", email = "joel.vaneenwyk@gmail.com" }
 ]
 license = { file = "LICENSE" }
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
-    "Operating System :: MacOS :: MacOS X",
-    "Operating System :: POSIX :: Linux",
-    "Operating System :: Microsoft :: Windows",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
-    "Topic :: Utilities"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+  "Topic :: Utilities"
 ]
 urls = { Homepage = "https://github.com/joelvaneenwyk/oschmod" }
 dependencies = ["pywin32>=306; sys_platform == 'win32'"]
@@ -42,38 +42,38 @@ ochmod = "oschmod:main"
 [tool.rye]
 dependencies = ["pywin32>=306; sys_platform == 'win32'"]
 dev-dependencies = [
-    'tox>=4.11.4',
-    'invoke>=2.2.0',
-    'poethepoet>=0.24.4',
-    'pre-commit==1.21.0; python_version<="3.0"',
-    'pre-commit<3.6.0; python_version<="3.8" and python_version>="3.0"',
-    'pre-commit>=3.6.0; python_version>="3.9"',
-    "tox>=4.15.0",
-    "hatch>=1.10.0",
-    "ruff>=0.4.3",
-    # ci
-    "pytest-github-actions-annotate-failures>=0.2.0",
-    # test
-    'mock>=5.1.0',
-    'pytest>=6.1.2',
-    'pytest-cov>=2.4.0',
-    'pytest-mock',
-    'pytest-xdist',
-    # types
-    'types-chevron>=0.14.2',
-    'types-psutil>=5.9.5.1',
-    'types-pywin32>=306',
-    'types-PyYAML>=6.0.12',
-    'types-setuptools>=65.4.0.0',
-    # lint
-    "mypy>=1.0.0",
-    "flake8>=3.9.2",
-    "pylint>=2.7.4",
-    "ruff>=0.1.0",
-    'black>=22.3.0',
-    # release
-    'pyinstaller',
-    "bump-my-version>=0.16.1"
+  'tox>=4.11.4',
+  'invoke>=2.2.0',
+  'poethepoet>=0.24.4',
+  'pre-commit==1.21.0; python_version<="3.0"',
+  'pre-commit<3.6.0; python_version<="3.8" and python_version>="3.0"',
+  'pre-commit>=3.6.0; python_version>="3.9"',
+  "tox>=4.15.0",
+  "hatch>=1.10.0",
+  "ruff>=0.4.3",
+  # ci
+  "pytest-github-actions-annotate-failures>=0.2.0",
+  # test
+  'mock>=5.1.0',
+  'pytest>=6.1.2',
+  'pytest-cov>=2.4.0',
+  'pytest-mock',
+  'pytest-xdist',
+  # types
+  'types-chevron>=0.14.2',
+  'types-psutil>=5.9.5.1',
+  'types-pywin32>=306',
+  'types-PyYAML>=6.0.12',
+  'types-setuptools>=65.4.0.0',
+  # lint
+  "mypy>=1.0.0",
+  "flake8>=3.9.2",
+  "pylint>=2.7.4",
+  "ruff>=0.1.0",
+  'black>=22.3.0',
+  # release
+  'pyinstaller',
+  "bump-my-version>=0.16.1"
 ]
 
 [tool.hatch.metadata]
@@ -121,16 +121,16 @@ cache_dir = ".cache/pytest"
 filterwarnings = "ignore::pytest.PytestConfigWarning"
 mock_use_standalone_module = true
 norecursedirs = [
-    ".git",
-    ".tox",
-    ".venv",
-    ".ruff_cache",
-    ".mypy-cache",
-    ".env",
-    "__pycache__",
-    "dist",
-    "build",
-    "htmlcov"
+  ".git",
+  ".tox",
+  ".venv",
+  ".ruff_cache",
+  ".mypy-cache",
+  ".env",
+  "__pycache__",
+  "dist",
+  "build",
+  "htmlcov"
 ]
 testpaths = ["tests"]
 addopts = '''
