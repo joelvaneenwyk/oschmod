@@ -4,7 +4,7 @@
 #
 #    pip-compile --constraint=requirements/constraints.txt --extra=lint --newline=LF --no-emit-find-links --no-emit-options --no-emit-trusted-host --no-reuse-hashes --output-file=requirements/lint.txt --strip-extras pyproject.toml
 #
-astroid==3.0.2
+astroid==3.2.2
     # via pylint
 black==24.3.0
     # via oschmod (pyproject.toml)
