@@ -48,7 +48,7 @@ pycodestyle==2.11.1
     # via flake8
 pyflakes==3.2.0
     # via flake8
-pylint==3.0.3
+pylint==3.2.3
     # via oschmod (pyproject.toml)
 pyproject-hooks==1.0.0
     # via build
