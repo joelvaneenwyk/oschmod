@@ -35,7 +35,9 @@ jobs:
       - name: Install Rye
         uses: eifinger/setup-rye@v3
         with:
-          enable-cache: true
+          # Disabled cache do to 'Unable to locate executable file: gunzip' error which
+          # expect will be fixed in future versions of the action.
+          enable-cache: false
           version: 'latest'
           cache-prefix: 'optional-prefix-${{ matrix.python-version }}-${{ runner.os }}'
           github-token: ${{ secrets.GITHUB_TOKEN }}
