@@ -1,13 +1,11 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = [
-    "setuptools>=65",
-]
+requires = ["setuptools>=65"]
 
 [project]
 authors = [
     { email = "dirk.avery@GEEmail.com", name = "YakDriver" },
-    { email = "joel.vaneenwyk@gmail.com", name = "Joel Van Eenwyk" },
+    { email = "joel.vaneenwyk@gmail.com", name = "Joel Van Eenwyk" }
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -25,16 +23,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Topic :: Utilities",
+    "Topic :: Utilities"
 ]
-dependencies = [
-    "build>=1.0",
-    "pywin32>=306; sys_platform=='win32'",
-]
-description = "Windows, Linux, and macOS compatible `chmod` library."
-dynamic = [
-    "version",
-]
+dependencies = ["build>=1.0", "pywin32>=306; sys_platform=='win32'"]
+description = """Windows, Linux, and macOS compatible `chmod` ("change mode") Python library to change the
+access permissions of file system objects (files and directories)."""
+dynamic = ["version"]
 name = "oschmod"
 requires-python = ">=3.8"
 
@@ -49,16 +43,14 @@ oschmod = "oschmod.cli:main"
 Homepage = "https://github.com/joelvaneenwyk/oschmod"
 
 [tool.bumpversion]
+# bump-my-version configuration
 allow_dirty = true
 commit = true
 commit_args = "--no-verify"
 current_version = "0.3.12"
 message = "Version updated from {current_version} to {new_version}"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\.(?P<dev>post)\\d+\\.dev\\d+)?"
-serialize = [
-    "{major}.{minor}.{patch}",
-    "{major}.{minor}.{patch}.{dev}{$PR_NUMBER}.dev{distance_to_latest_tag}",
-]
+serialize = ["{major}.{minor}.{patch}", "{major}.{minor}.{patch}.{dev}{$PR_NUMBER}.dev{distance_to_latest_tag}"]
 tag = true
 tag_name = "{new_version}"
 
@@ -75,18 +67,13 @@ filename = "CHANGELOG.md"
 search = "Unreleased"
 
 [tool.bumpversion.parts.dev]
-values = [
-    "post",
-    "release",
-]
+values = ["post", "release"]
 
 [tool.distutils.bdist_wheel]
 universal = 1
 
 [tool.pyright]
-ignore = [
-    "build/",
-]
+ignore = ["build/"]
 
 [tool.pytest.ini_options]
 addopts = "-rxEfsw\n--strict-markers\n--doctest-modules\n--doctest-glob=\\*.md\n--tb=short"
@@ -102,40 +89,18 @@ norecursedirs = [
     "__pycache__",
     "build",
     "dist",
-    "htmlcov",
+    "htmlcov"
 ]
-testpaths = [
-    "tests",
-]
+testpaths = ["tests"]
 
 [tool.ruff]
 target-version = "py38"
-exclude = [
-    "*.egg",
-    "*/static/salt/formulas/*",
-    ".eggs",
-    ".git",
-    ".tox",
-    "__pycache__",
-    "build",
-    "dist",
-    "htmlcov",
-]
+exclude = ["*.egg", "*/static/salt/formulas/*", ".eggs", ".git", ".tox", "__pycache__", "build", "dist", "htmlcov"]
 line-length = 100
 
 [tool.ruff.lint]
-ignore = [
-    "D107",
-    "D203",
-    "D211",
-    "D213",
-]
-select = [
-    "D",
-    "E",
-    "F",
-    "W",
-]
+ignore = ["D107", "D203", "D211", "D213"]
+select = ["D", "E", "F", "W"]
 
 [tool.rye]
 dev-dependencies = [
@@ -163,41 +128,24 @@ dev-dependencies = [
     "types-pywin32>=306",
     "types-PyYAML>=6.0",
     "types-setuptools>=65.4",
-    "uv>=0.2",
+    "uv>=0.2"
 ]
 
 [tool.setuptools]
 include-package-data = true
-packages = [
-    "oschmod",
-]
-platforms = [
-    "Darwin",
-    "Linux",
-    "Windows",
-]
+packages = ["oschmod"]
+platforms = ["Darwin", "Linux", "Windows"]
 
 [tool.setuptools.dynamic.readme]
 content-type = "text/markdown"
-file = [
-    "CHANGELOG.md",
-    "README.md",
-]
+file = ["CHANGELOG.md", "README.md"]
 
 [tool.setuptools.dynamic.version]
 attr = "oschmod.__version__"
 
 [tool.setuptools.exclude-package-data]
-"*" = [
-    "*.dylib",
-    "*.py[cod]",
-    "*.so",
-    ".git",
-    "__pycache__",
-]
-oschmod = [
-    ".gitattributes",
-]
+"*" = ["*.dylib", "*.py[cod]", "*.so", ".git", "__pycache__"]
+oschmod = [".gitattributes"]
 
 [tool.setuptools.package-data]
 "*" = [
@@ -209,11 +157,9 @@ oschmod = [
     ".pre-commit-config.yaml",
     "setup.cmd",
     "setup.sh",
-    "tox.ini",
+    "tox.ini"
 ]
-oschmod = [
-    "py.typed",
-]
+oschmod = ["py.typed"]
 
 [tool.virtualenv]
 include-system-site-packages = false

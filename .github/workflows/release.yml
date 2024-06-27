@@ -1,9 +1,14 @@
-name: Cut release automatically
+name: Prepare Release
 
 on:
   workflow_dispatch:
   schedule:
     - cron: "40 22 * * 5"
+  release:
+    types: [published]
+
+permissions:
+  contents: read
 
 jobs:
   check-changes:
@@ -30,9 +35,41 @@ jobs:
             echo "Release needed"
           fi
 
+  deploy:
+    needs: check-changes
+    name: "Deploy // PyPI"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build
+
+    - name: Build package
+      run: python -m build
+
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@release/v1.9
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+
   bump-and-pull-request:
     needs: check-changes
     runs-on: ubuntu-latest
+
+    outputs:
+      NEW_VERSION: "New version number used for pull request"
 
     steps:
       - name: Checkout
@@ -44,24 +81,24 @@ jobs:
         with:
           python-version: "3.x"
 
-      - run: |
-          pip install -r $GITHUB_WORKSPACE/requirements/release.txt
-          new_version="$(bumpversion --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)"
+      - name: Install Dependencies
+        id: get-new-version
+        run: |
+          pip install --upgrade bump-my-version
+          new_version="$(bump-my-version --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)"
           echo "NEW_VERSION=$new_version" >> "$GITHUB_ENV"
-          echo "New version will be $new_version"
-          bumpversion patch
+          bump-my-version patch
 
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: autorelease/${{ env.NEW_VERSION }}
-          commit-message: Release version ${{ env.NEW_VERSION }}
-          title: Release version ${{ env.NEW_VERSION }}
+          branch: autorelease/${{ steps.get-new-version.outputs.NEW_VERSION }}
+          commit-message: Release version ${{ steps.get-new-version.outputs.NEW_VERSION }}
+          title: Release version ${{ steps.get-new-version.outputs.NEW_VERSION }}
           body: This is an automated release that updates dependencies.
 
       - name: Show outputs
         run: |
-          echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pr_number }}"
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
