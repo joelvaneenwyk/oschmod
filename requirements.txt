@@ -128,7 +128,7 @@ pyinstaller==6.3.0
     # via oschmod (pyproject.toml)
 pyinstaller-hooks-contrib==2024.3
     # via pyinstaller
-pylint==3.0.3
+pylint==3.2.4
     # via oschmod (pyproject.toml)
 pyparsing==3.1.1
     # via dotted-notation
