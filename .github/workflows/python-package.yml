@@ -10,7 +10,7 @@ on:
     branches: [main, develop]
 
 env:
-  RYE_URL: htts://github.com/astral-sh/rye
+  RYE_URL: https://github.com/astral-sh/rye
   RYE_TAG: 0.35.0
 
 jobs:
