@@ -33,8 +33,10 @@ jobs:
           shared-key: "rye-${{ runner.os }}"
           # Determines whether workspace `target` directories are cached.
           # If `false`, only the cargo registry will be cached.
+          cache-targets: "false"
           cache-all-crates: "true"
           cache-provider: "github"
+      - run: cargo install --git "${{ env.RYE_URL }}" --tag "${{ env.RYE_TAG }}" rye
 
   build:
     needs: rye-install-cache
@@ -54,11 +56,10 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: "rye-${{ runner.os }}"
+          cache-targets: "false"
           cache-all-crates: "true"
           cache-provider: "github"
-
-      - name: Install Rye
-        run: cargo install --git "${{ env.RYE_URL }}" --tag "${{ env.RYE_TAG }}" rye
+      - run: cargo install --git "${{ env.RYE_URL }}" --tag "${{ env.RYE_TAG }}" rye
 
       - name: Install Dependencies
         run: |
