@@ -10,24 +10,31 @@ on:
     branches: [main, develop]
 
 env:
+  OWNER: joelvaneenwyk
   RYE_URL: https://github.com/astral-sh/rye
   RYE_TAG: 0.35.0
+  PYTHONDONTWRITEBYTECODE: 1
 
 jobs:
   # First run cargo install to cache the rye binary for each platform
   rye-install-cache:
     strategy:
-      matrix: { os: ["ubuntu-latest", "macos-latest", "windows-latest"] }
-    runs-on: ${{ matrix.os }}
+      matrix: { os: ["ubuntu", "macos", "windows"] }
+    runs-on: "${{ matrix.os }}-latest"
+    name: "Install Rye | ${{ matrix.os }}"
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Rye
-        uses: baptiste0928/cargo-install@v3
+      # selecting a toolchain either by action or manual `rustup` calls should happen
+      # before the plugin, as the cache uses the current rustc version as its cache key
+      - run: rustup toolchain install stable --profile minimal
+      - uses: Swatinem/rust-cache@v2
         with:
-          crate: rye
-          cache-key: "rye-${{ runner.os }}"
-          git: ${{ env.RYE_URL }}
-          tag: ${{ env.RYE_TAG }}
+          # A cache key that is used instead of the automatic `job`-based key,
+          # and is stable over multiple jobs.
+          shared-key: "rye-${{ runner.os }}"
+          # Determines whether workspace `target` directories are cached.
+          # If `false`, only the cargo registry will be cached.
+          cache-all-crates: "true"
+          cache-provider: "github"
 
   build:
     needs: rye-install-cache
@@ -36,43 +43,41 @@ jobs:
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
         python-version: ["3.12", "3.8", "3.9", "3.10", "3.11"]
-
     runs-on: ${{ matrix.os }}
-    env:
-      OWNER: joelvaneenwyk
-      PYTHONDONTWRITEBYTECODE: 1
-
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install Rye
-        uses: baptiste0928/cargo-install@v3
+      # See previous job for details on cache setup
+      - run: rustup toolchain install stable --profile minimal
+      - uses: Swatinem/rust-cache@v2
         with:
-          crate: rye
-          cache-key: "rye-${{ runner.os }}"
-          git: ${{ env.RYE_URL }}
-          tag: ${{ env.RYE_TAG }}
+          shared-key: "rye-${{ runner.os }}"
+          cache-all-crates: "true"
+          cache-provider: "github"
 
-      - name: Install dependencies
+      - name: Install Rye
+        run: cargo install --git "${{ env.RYE_URL }}" --tag "${{ env.RYE_TAG }}" rye
+
+      - name: Install Dependencies
         run: |
           rye pin ${{ matrix.python-version }}
           rye sync
 
-      - name: Build package
+      - name: Build Package
         run: |
           rye build
 
-      - name: Run lint checks
+      - name: Run `pylint`
         run: |
           rye run pylint oschmod/
           rye run pylint tests/
 
-      - name: Run ruff checks
+      - name: Run `ruff check`
         run: |
           rye run ruff check .
 
-      - name: Run tests
+      - name: Run `pytest`
         run: |
           rye run pytest
