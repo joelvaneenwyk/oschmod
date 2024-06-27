@@ -27,26 +27,31 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Install Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install Rye
+        uses: eifinger/setup-rye@v3
+        with:
+          enable-cache: true
+          version: 'latest'
+          cache-prefix: 'optional-prefix-${{ matrix.python-version }}-${{ runner.os }}'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip build
-          python -m build
+          rye sync -f
+          rye build
 
       - name: Run lint checks
         run: |
-          python -m pip install -r requirements/lint.txt
           pylint oschmod/
-          python -m pip install -r requirements/test.txt
-          pylint tests/*.py
+          pylint tests/
 
       - name: Run ruff checks
         run: |
-          python -m pip install ruff
           ruff check .
 
       - name: Run tests
