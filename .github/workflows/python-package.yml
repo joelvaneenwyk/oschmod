@@ -28,14 +28,11 @@ jobs:
           fetch-depth: 0
 
       - name: Install Rye
-        uses: eifinger/setup-rye@v3
+        uses: baptiste0928/cargo-install@v3
         with:
-          # Disabled cache do to 'Unable to locate executable file: gunzip' error which
-          # expect will be fixed in future versions of the action.
-          enable-cache: false
-          version: 'latest'
-          cache-prefix: 'optional-prefix-${{ matrix.python-version }}-${{ runner.os }}'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          crate: rye
+          git: https://github.com/astral-sh/rye
+          branch: main
 
       - name: Install dependencies
         run: |
