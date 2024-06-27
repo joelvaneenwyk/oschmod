@@ -655,7 +655,7 @@ def get_owner(path: ModePathInput) -> ModeSidObject:
     if IS_WINDOWS:
         sid = _get_account_sid(SYSTEM_NAME_NONE, win_get_owner_sid(path))
     else:
-        sid = getpwuid(os.stat(_to_path(path)).st_uid).pw_name
+        sid = getpwuid(os.stat(_to_path(path)).st_uid).pw_name  # type: ignore[assignment]
     return sid
 
 
@@ -664,7 +664,7 @@ def get_group(path: ModePathInput) -> ModeSidObject:
     if IS_WINDOWS:
         sid = _get_account_sid(SYSTEM_NAME_NONE, win_get_group_sid(path))
     else:
-        sid = getgrgid(os.stat(_to_path(path)).st_gid).gr_name
+        sid = getgrgid(os.stat(_to_path(path)).st_gid).gr_name  # type: ignore[assignment]
     return sid
 
 

@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 from typing import Generator
 
-import pytest
+import pytest  # type: ignore[import-not-found]
 
 try:
     from oschmod import set_mode_recursive  # pylint: disable=import-error
