@@ -93,14 +93,9 @@ platforms = ["Linux", "Windows", "Darwin"]
 
 [tool.setuptools.package-data]
 "*" = [
-    # graft oschmod
-    # graft tests
-    # include .bumpversion.cfg
-    # include CHANGELOG.md
-    # include LICENSE
-    # include README.md
-    # include .travis.yml .mergify.yml
+    ".mergify.yml",
     "*.txt",
+    "*.lock",
     ".editorconfig",
     ".mergify.yml",
     ".pre-commit-config.yaml",
@@ -147,9 +142,11 @@ addopts = '''
 [tool.ruff]
 line-length = 100
 exclude = [".tox", ".git", "__pycache__", ".eggs", "*.egg", "build", "dist", "htmlcov", "*/static/salt/formulas/*"]
+target-version = "py38"
+
+[tool.ruff.lint]
 ignore = ["D107", "D211", "D213", "D203"]
 select = ["D", "E", "F", "W"]
-target-version = "py38"
 
 [tool.pyright]
 ignore = ["build/"]
