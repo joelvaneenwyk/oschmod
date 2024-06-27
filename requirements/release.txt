@@ -51,7 +51,7 @@ pyparsing==3.1.1
     # via dotted-notation
 pyproject-hooks==1.0.0
     # via build
-python-dotenv==1.0.0
+python-dotenv==1.0.1
     # via pydantic-settings
 pywin32==306 ; sys_platform == "win32"
     # via oschmod (pyproject.toml)
