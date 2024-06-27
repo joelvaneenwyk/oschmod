@@ -27,11 +27,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
       - name: Install Rye
         uses: eifinger/setup-rye@v3
         with:
@@ -44,18 +39,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          rye sync -f
+          rye pin ${{ matrix.python-version }}
+          rye sync
+
+      - name: Build package
+        run: |
           rye build
 
       - name: Run lint checks
         run: |
-          pylint oschmod/
-          pylint tests/
+          rye run pylint oschmod/
+          rye run pylint tests/
 
       - name: Run ruff checks
         run: |
-          ruff check .
+          rye run ruff check .
 
       - name: Run tests
         run: |
-          pytest
+          rye run pytest
