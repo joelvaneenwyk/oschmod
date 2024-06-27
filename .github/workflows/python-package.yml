@@ -12,7 +12,6 @@ on:
 env:
   RYE_URL: htts://github.com/astral-sh/rye
   RYE_TAG: 0.35.0
-  RYE_BRANCH: main
 
 jobs:
   # First run cargo install to cache the rye binary for each platform
@@ -26,7 +25,6 @@ jobs:
         with:
           crate: rye
           cache-key: "rye-${{ runner.os }}"
-          branch: ${{ env.RYE_BRANCH }}
           git: ${{ env.RYE_URL }}
           tag: ${{ env.RYE_TAG }}
 
@@ -53,7 +51,6 @@ jobs:
         with:
           crate: rye
           cache-key: "rye-${{ runner.os }}"
-          branch: ${{ env.RYE_BRANCH }}
           git: ${{ env.RYE_URL }}
           tag: ${{ env.RYE_TAG }}
 
