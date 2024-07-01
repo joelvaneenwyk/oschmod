@@ -3,10 +3,17 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
+name = "oschmod"
+dynamic = ["version"]
+readme = "README.md"
+description = """Windows, Linux, and macOS compatible `chmod` ("change mode") Python library to change the
+access permissions of file system objects (files and directories)."""
 authors = [
     { email = "dirk.avery@GEEmail.com", name = "YakDriver" },
     { email = "joel.vaneenwyk@gmail.com", name = "Joel Van Eenwyk" }
 ]
+requires-python = ">= 3.8"
+dependencies = ["build>=1.0", "pywin32>=306; sys_platform=='win32'"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -25,13 +32,6 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Utilities"
 ]
-dependencies = ["build>=1.0", "pywin32>=306; sys_platform=='win32'"]
-description = """Windows, Linux, and macOS compatible `chmod` ("change mode") Python library to change the
-access permissions of file system objects (files and directories)."""
-dynamic = ["version"]
-name = "oschmod"
-requires-python = ">= 3.8"
-readme = "README.md"
 
 [project.license]
 file = "LICENSE"
@@ -145,27 +145,21 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/oschmod"]
 
-## [tool.setuptools.dynamic.readme]
-## content-type = "text/markdown"
-## file = ["CHANGELOG.md", "README.md"]
-##
-## [tool.setuptools.exclude-package-data]
-## "*" = ["*.dylib", "*.py[cod]", "*.so", ".git", "__pycache__"]
-## oschmod = [".gitattributes"]
-##
-## [tool.setuptools.package-data]
-## "*" = [
-##     "*.lock",
-##     "*.txt",
-##     ".editorconfig",
-##     ".mergify.yml",
-##     ".mergify.yml",
-##     ".pre-commit-config.yaml",
-##     "setup.cmd",
-##     "setup.sh",
-##     "tox.ini"
-## ]
-## oschmod = ["py.typed"]
+[tool.hatch.build.targets.sdist]
+include = [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "pyproject.toml",
+    ".editorconfig",
+    ".mergify.yml",
+    "tox.ini",
+    "setup.cmd",
+    "setup.sh",
+    ".pre-commit-config.yaml",
+    "requirements-dev.lock",
+    "requirements.lock"
+]
 
 [tool.virtualenv]
 include-system-site-packages = false
