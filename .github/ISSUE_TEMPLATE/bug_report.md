@@ -1,19 +1,20 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: 'Bug'
-assignees: ''
-
+title: ""
+labels: "Bug"
+assignees: ""
 ---
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
 **Your configuration**
+
 <!-- Include your configuration and environment info -->
 
 **Steps to reproduce**
+
 <!-- What exact steps led up to the issue -->
 
 **Expected behavior**
