@@ -134,7 +134,7 @@ pyparsing==3.1.1
     # via dotted-notation
 pyproject-api==1.6.1
     # via tox
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via build
 pytest==7.4.4
     # via
