@@ -163,7 +163,7 @@ rich==13.7.0
     # via
     #   bump-my-version
     #   rich-click
-rich-click==1.7.3
+rich-click==1.8.3
     # via bump-my-version
 ruff==0.1.11
     # via oschmod (pyproject.toml)
