@@ -191,7 +191,7 @@ types-psutil==5.9.5.20240106
     # via oschmod (pyproject.toml)
 types-pywin32==306.0.0.20240106
     # via oschmod (pyproject.toml)
-types-pyyaml==6.0.12.12
+types-pyyaml==6.0.12.20240724
     # via oschmod (pyproject.toml)
 types-setuptools==69.5.0.20240423
     # via oschmod (pyproject.toml)
