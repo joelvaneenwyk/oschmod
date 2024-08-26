@@ -130,7 +130,7 @@ pyinstaller-hooks-contrib==2024.3
     # via pyinstaller
 pylint==3.2.5
     # via oschmod (pyproject.toml)
-pyparsing==3.1.1
+pyparsing==3.1.4
     # via dotted-notation
 pyproject-api==1.6.1
     # via tox
