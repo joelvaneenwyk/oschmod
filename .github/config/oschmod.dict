@@ -14,6 +14,8 @@ doctest
 dotenv
 dylib
 Efsw
+envlist
+envname
 exceptiongroup
 execnet
 filelock
@@ -50,6 +52,7 @@ pyflakes
 pygments
 pyinstaller
 pyright
+PYTHONWARNDEFAULTENCODING
 pyyaml
 secretstorage
 setuptools
@@ -58,6 +61,8 @@ sniffio
 testpaths
 tomli
 tomlkit
+toxinidir
+toxworkdir
 userpath
 virtualenv
 wcmatch
