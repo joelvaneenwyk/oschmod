@@ -1,0 +1,11 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions:
+  - name: oschmod
+    path: ./.github/config/oschmod.dict
+    addWords: true
+dictionaries:
+  - oschmod
+words: []
+ignoreWords: []
+import: []
