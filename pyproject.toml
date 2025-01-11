@@ -74,6 +74,10 @@ dev-dependencies = [
   'pyinstaller',
   "bump-my-version>=0.16.1"
 ]
+link-mode = "copy"
+
+[tool.uv.pip]
+universal = true
 
 [tool.hatch.metadata]
 managed = true
