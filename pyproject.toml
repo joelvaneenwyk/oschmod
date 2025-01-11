@@ -35,6 +35,7 @@ dependencies = ["pywin32>=306; sys_platform == 'win32'"]
 
 [project.optional-dependencies]
 dev = []
+
 [project.scripts]
 oschmod = "oschmod:main"
 ochmod = "oschmod:main"
@@ -44,12 +45,11 @@ dev-dependencies = [
   'tox>=4.11.4',
   'invoke>=2.2.0',
   'poethepoet>=0.24.4',
-  'pre-commit==1.21.0; python_version<="3.0"',
-  'pre-commit<3.6.0; python_version<="3.8" and python_version>="3.0"',
-  'pre-commit>=3.6.0; python_version>="3.9"',
   "tox>=4.15.0",
   "hatch>=1.10.0",
   "ruff>=0.4.3",
+  "tox-uv>=1.13.1",
+  "pre-commit>=3.5.0",
   # ci
   "pytest-github-actions-annotate-failures>=0.2.0",
   # test
@@ -72,8 +72,7 @@ dev-dependencies = [
   'black>=22.3.0',
   # release
   'pyinstaller',
-  "bump-my-version>=0.16.1",
-  "tox-uv>=1.13.1",
+  "bump-my-version>=0.16.1"
 ]
 
 [tool.hatch.metadata]
@@ -84,38 +83,21 @@ allow-direct-references = true
 path = "src/oschmod/__init__.py"
 pattern = "__version__ = ['\"](?P<version>\\d+\\.\\d+\\.\\d+)['\"]"
 
-# [tool.setuptools]
-# packages = ["oschmod"]
-# include-package-data = true
-# platforms = ["Linux", "Windows", "Darwin"]
-#
-# [tool.setuptools.package-data]
-# "*" = [
-#    "*.txt",
-#    ".editorconfig",
-#    ".mergify.yml",
-#    ".pre-commit-config.yaml",
-#    "setup.cmd",
-#    "setup.sh",
-#    "tox.ini"
-#]
-# "oschmod" = ["py.typed"]
-
 [tool.hatch.build.targets.wheel]
 packages = ["src/oschmod"]
+include = [
+  "*.txt",
+  ".editorconfig",
+  ".mergify.yml",
+  ".pre-commit-config.yaml",
+  "setup.cmd",
+  "setup.sh",
+  "tox.ini",
+  "src/oschmod/py.typed"
+]
 
 [tool.hatch.build.targets.sdist]
 exclude = ["/.github", "/.ruff_cache", "/.venv", "/.cache"]
-
-# "*" = ["*.py[cod]", "__pycache__", "*.so", "*.dylib", ".git"]
-# "oschmod" = [".gitattributes"]
-#
-# [tool.setuptools.dynamic]
-# readme = { file = ["README.md", "CHANGELOG.md"], content-type = "text/markdown" }
-# version = { attr = "oschmod.__version__" }
-#
-# [tool.distutils.bdist_wheel]
-# universal = 1
 
 [tool.pytest.ini_options]
 cache_dir = ".cache/pytest"

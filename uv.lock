@@ -772,7 +772,7 @@ version = "8.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "zipp", version = "3.20.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
-    { name = "zipp", version = "3.21.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9' and python_full_version < '3.12'" },
+    { name = "zipp", version = "3.21.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz", hash = "sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7", size = 55304 }
 wheels = [
@@ -1093,9 +1093,7 @@ dev = [
     { name = "mock", specifier = ">=5.1.0" },
     { name = "mypy", specifier = ">=1.0.0" },
     { name = "poethepoet", specifier = ">=0.24.4" },
-    { name = "pre-commit", marker = "python_full_version >= '3.0' and python_full_version < '3.9'", specifier = "<3.6.0" },
-    { name = "pre-commit", marker = "python_full_version < '3.1'", specifier = "==1.21.0" },
-    { name = "pre-commit", marker = "python_full_version >= '3.9'", specifier = ">=3.6.0" },
+    { name = "pre-commit", specifier = ">=3.5.0" },
     { name = "pyinstaller" },
     { name = "pylint", specifier = ">=2.7.4" },
     { name = "pytest", specifier = ">=6.1.2" },
