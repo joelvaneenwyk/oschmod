@@ -72,7 +72,8 @@ dev-dependencies = [
   'black>=22.3.0',
   # release
   'pyinstaller',
-  "bump-my-version>=0.16.1"
+  "bump-my-version>=0.16.1",
+  "tox-uv>=1.13.1",
 ]
 
 [tool.hatch.metadata]
