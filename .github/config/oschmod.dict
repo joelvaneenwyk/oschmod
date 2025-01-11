@@ -8,11 +8,13 @@ cffi
 cfgv
 chardet
 colorama
+ctypes
 distlib
 doctest
 dotenv
 dylib
 Efsw
+exceptiongroup
 execnet
 filelock
 filterwarnings
@@ -26,6 +28,7 @@ isort
 itertools
 jaraco
 jeepney
+macholib
 mccabe
 mdurl
 mypy
@@ -33,6 +36,7 @@ nodeenv
 norecursedirs
 ochmod
 pathspec
+pefile
 pexpect
 platformdirs
 poethepoet
@@ -59,4 +63,5 @@ virtualenv
 wcmatch
 wcwidth
 xdist
+zipp
 zstandard
