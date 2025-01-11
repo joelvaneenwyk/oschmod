@@ -9,8 +9,7 @@
         "editor.formatOnSave": true,
         "editor.formatOnSaveMode": "modificationsIfAvailable",
         "editor.formatOnType": true,
-        "editor.wordBasedSuggestions": "allDocuments",
-        "gitlens.codeLens.symbolScopes": ["!Module"]
+        "editor.wordBasedSuggestions": "allDocuments"
     },
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml"
