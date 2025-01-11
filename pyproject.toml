@@ -39,8 +39,7 @@ dev = []
 oschmod = "oschmod:main"
 ochmod = "oschmod:main"
 
-[tool.rye]
-dependencies = ["pywin32>=306; sys_platform == 'win32'"]
+[tool.uv]
 dev-dependencies = [
   'tox>=4.11.4',
   'invoke>=2.2.0',
@@ -106,6 +105,7 @@ packages = ["src/oschmod"]
 
 [tool.hatch.build.targets.sdist]
 exclude = ["/.github", "/.ruff_cache", "/.venv", "/.cache"]
+
 # "*" = ["*.py[cod]", "__pycache__", "*.so", "*.dylib", ".git"]
 # "oschmod" = [".gitattributes"]
 #
